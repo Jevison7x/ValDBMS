@@ -1,7 +1,7 @@
 <%--
-    Document   : index
-    Created on : May 30, 2020, 12:14:43 PM
-    Author     : Jevison7x
+    Document   : create-account
+    Created on : May 30, 2020, 2:22:38 PM
+    Author     : Ugimson
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -47,25 +47,37 @@
                         </div>
                     </div>
                     <div class="w3_info">
-                        <h2>Login to your Account</h2>
-                        <p>Enter your details to login.</p>
+                        <h2>Create a new account</h2>
+                        <p>Enter your details to create an account.</p>
                         <form action="#" method="post">
+                            <label>Username</label>
+                            <div class="input-group">
+                                <span class="fa fa-mobile" aria-hidden="true"></span>
+                                <input type="email" placeholder="Enter Your Username" name="userName" required="">
+                            </div>
                             <label>Email Address</label>
                             <div class="input-group">
                                 <span class="fa fa-envelope" aria-hidden="true"></span>
-                                <input type="email" placeholder="Enter Your Email" required="">
+                                <input type="email" placeholder="Enter Your Email" name="email" required="">
                             </div>
                             <label>Password</label>
                             <div class="input-group">
                                 <span class="fa fa-lock" aria-hidden="true"></span>
-                                <input type="Password" placeholder="Enter Password" required="">
+                                <input type="password" placeholder="Enter Password" name="password" required="">
                             </div>
-                            <div class="login-check">
-                                <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i> Remember me</label>
+                            <label>Confirm Password</label>
+                            <div class="input-group">
+                                <span class="fa fa-lock" aria-hidden="true"></span>
+                                <input type="password" placeholder="Please Confirm Password" name="conpassword" required="">
                             </div>
-                            <button class="btn btn-danger btn-block" type="submit">Login</button >
+                            <label>Admin Pin</label>
+                            <div class="input-group">
+                                <span class="fa fa-lock" aria-hidden="true"></span>
+                                <input type="password" placeholder="Please Confirm Password" name="pin" required="">
+                            </div>
+                            <button class="btn btn-danger btn-block" type="submit">Register</button>
+                            <p class="account1">Already have an account? <a href="login-page">login here</a></p>
                         </form>
-                        <p class="account1">Don't have an account? <a href="create-account">Register here</a></p>
                     </div>
                 </div>
                 <!-- //main content -->
