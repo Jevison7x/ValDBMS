@@ -46,7 +46,7 @@ public class CreateAccountServlet extends HttpServlet
             String userName = request.getParameter("userName");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String conpassword = request.getParameter("conpassword");
+            String conpassword = request.getParameter("coNpassword");
             String role = request.getParameter("role");
             Digester digester = new Digester();
             String encPassword = digester.doDigest(password);
