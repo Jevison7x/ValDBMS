@@ -68,7 +68,7 @@
                             <label>Confirm Password</label>
                             <div class="input-group">
                                 <span class="fa fa-lock" aria-hidden="true"></span>
-                                <input type="password" placeholder="Please Confirm Password" name="conpassword" required="">
+                                <input type="password" placeholder="Please Confirm Password" name="coNpassword" required="">
                             </div>
                             <label>Admin Pin</label>
                             <div class="input-group">
