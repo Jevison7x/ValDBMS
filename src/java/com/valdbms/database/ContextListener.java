@@ -88,7 +88,7 @@ public class ContextListener implements ServletContextListener
         persistenceMap.put("javax.persistence.jdbc.user", remoteDBProperties.getProperty("db.user"));
         persistenceMap.put("javax.persistence.jdbc.password", remoteDBProperties.getProperty("db.pass"));
         persistenceMap.put("javax.persistence.jdbc.driver", remoteDBProperties.getProperty("driverName"));
-        DBConfiguration.remoteEntityManagerFactory = Persistence.createEntityManagerFactory("DagaPU", persistenceMap);
+        DBConfiguration.remoteEntityManagerFactory = Persistence.createEntityManagerFactory("ValDBMS_PU", persistenceMap);
     }
 
     private void loadLocalEntityManagerFactory()
@@ -98,6 +98,6 @@ public class ContextListener implements ServletContextListener
         persistenceMap.put("javax.persistence.jdbc.user", localDBProperties.getProperty("db.user"));
         persistenceMap.put("javax.persistence.jdbc.password", localDBProperties.getProperty("db.pass"));
         persistenceMap.put("javax.persistence.jdbc.driver", localDBProperties.getProperty("driverName"));
-        DBConfiguration.localEntityManagerFactory = Persistence.createEntityManagerFactory("DagaPU", persistenceMap);
+        DBConfiguration.localEntityManagerFactory = Persistence.createEntityManagerFactory("ValDBMS_PU", persistenceMap);
     }
 }

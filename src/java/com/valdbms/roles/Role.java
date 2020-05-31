@@ -11,7 +11,7 @@
  */
 package com.valdbms.roles;
 
-import static com.valdbms.roles.Roles.ROLES;
+import static com.valdbms.roles.Role.ROLES;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = ROLES)
-public class Roles implements Serializable
+public class Role implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private int id;
@@ -44,7 +44,7 @@ public class Roles implements Serializable
         this.id = id;
     }
 
-    public Roles()
+    public Role()
     {
     }
 

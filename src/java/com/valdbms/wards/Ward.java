@@ -29,7 +29,7 @@ public class Ward implements Serializable
     private static final long serialVersionUID = 1L;
     @Id
     private String ward;
-    private String wardName;
+    private String lga;
 
     public Ward()
     {
@@ -45,18 +45,17 @@ public class Ward implements Serializable
         this.ward = ward;
     }
 
-    public String getWardName()
+    public String getLga()
     {
-        return wardName;
+        return lga;
     }
 
-    public void setWardName(String wardName)
+    public void setLga(String lga)
     {
-        this.wardName = wardName;
+        this.lga = lga;
     }
 
     public static final String WARDS = "wards";
     public static final String WARD = "ward";
-    public static final String WARD_NAME = "wardName";
-
+    public static final String LGA = "lga";
 }

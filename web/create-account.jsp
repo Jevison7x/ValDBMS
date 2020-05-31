@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,6 +28,7 @@
         <!-- css files -->
         <link href="landing/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
         <link href="landing/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+        <link href="landing/css/jevison7x.css" rel="stylesheet" type="text/css" media="all"/>
         <!-- //css files -->
 
         <!-- google fonts -->
@@ -48,12 +50,19 @@
                     </div>
                     <div class="w3_info">
                         <h2>Create a new account</h2>
+                <c:choose>
+                    <c:when test="${errorMessage ne null}">
+                        <p class="error-msg">${errorMessage}</p>
+                    </c:when>
+                    <c:otherwise>
                         <p>Enter your details to create an account.</p>
-                        <form action="#" method="post">
+                    </c:otherwise>
+                </c:choose>
+                        <form action="create-account-servlet" method="post">
                             <label>Username</label>
                             <div class="input-group">
                                 <span class="fa fa-mobile" aria-hidden="true"></span>
-                                <input type="email" placeholder="Enter Your Username" name="userName" required="">
+                                <input type="text" placeholder="Enter Your Username" name="userName" required="">
                             </div>
                             <label>Email Address</label>
                             <div class="input-group">
@@ -73,7 +82,7 @@
                             <label>Admin Pin</label>
                             <div class="input-group">
                                 <span class="fa fa-lock" aria-hidden="true"></span>
-                                <input type="password" placeholder="Please Confirm Password" name="pin" required="">
+                                <input type="password" placeholder="Enter admin pin" name="pin" required="">
                             </div>
                             <button class="btn btn-danger btn-block" type="submit">Register</button>
                             <p class="account1">Already have an account? <a href="login-page">login here</a></p>

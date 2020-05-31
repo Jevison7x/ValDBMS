@@ -9,6 +9,27 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <context-param>
+        <description>The base URL for dashboard resources</description>
+        <param-name>Dashboard URL</param-name>
+        <param-value>https://valdbms.com.ng</param-value>
+    </context-param>
+    <filter>
+        <filter-name>Session Filter</filter-name>
+        <filter-class>com.valdbms.security.SessionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Session Filter</filter-name>
+        <url-pattern>/dashboard/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <listener>
+        <description>The web application's Context Listener Class.</description>
+        <listener-class>com.valdbms.database.ContextListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>Login Servlet</servlet-name>
         <servlet-class>com.valdbms.security.LoginServlet</servlet-class>
@@ -29,6 +50,30 @@
         <servlet-name>Create Account Servlet</servlet-name>
         <servlet-class>com.valdbms.security.CreateAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Dashboard Index Page (JSP)</servlet-name>
+        <jsp-file>/dashboard-index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Dashboard Home Servlet</servlet-name>
+        <servlet-class>com.valdbms.dashboard.DashboardHomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Dashboard Home Page (JSP)</servlet-name>
+        <jsp-file>/WEB-INF/dashboard-pages/dashboard-home-page.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Members List Servlet</servlet-name>
+        <servlet-class>com.valdbms.members.MembersListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Members Page (JSP)</servlet-name>
+        <jsp-file>/WEB-INF/dashboard-pages/members.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>404 Page (JSP)</servlet-name>
+        <jsp-file>/WEB-INF/error-pages/404.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login Servlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -48,6 +93,30 @@
     <servlet-mapping>
         <servlet-name>Create Account Servlet</servlet-name>
         <url-pattern>/create-account-servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Dashboard Index Page (JSP)</servlet-name>
+        <url-pattern>/dashboard/index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Dashboard Home Servlet</servlet-name>
+        <url-pattern>/dashboard/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Dashboard Home Page (JSP)</servlet-name>
+        <url-pattern>/dashboard/home-page</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Members List Servlet</servlet-name>
+        <url-pattern>/dashboard/members</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Members Page (JSP)</servlet-name>
+        <url-pattern>/dashboard/members-page</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>404 Page (JSP)</servlet-name>
+        <url-pattern>/dashboard/404</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

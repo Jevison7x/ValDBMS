@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,6 +28,7 @@
         <!-- css files -->
         <link href="landing/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
         <link href="landing/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+        <link href="landing/css/jevison7x.css" rel="stylesheet" type="text/css" media="all"/>
         <!-- //css files -->
 
         <!-- google fonts -->
@@ -48,17 +50,33 @@
                     </div>
                     <div class="w3_info">
                         <h2>Login to your Account</h2>
+                <c:choose>
+                    <c:when test="${param.login ne null and param.login eq 0}">
+                        <p class="error-msg">Invalid username or password!</p>
+                    </c:when>
+                    <c:when test="${param.login ne null and param.login eq 1}">
+                        <p class="success-msg">Your account has been created successfully!</p>
+                    </c:when>
+                    <c:when test="${param.login ne null and param.login eq 2}">
+                        <p class="logout-msg">You have logged out successfully.</p>
+                    </c:when>
+                    <c:when test="${param.login ne null and param.login eq 3}">
+                        <p class="error-msg">Your session has expired.</p>
+                    </c:when>
+                    <c:otherwise>
                         <p>Enter your details to login.</p>
-                        <form action="#" method="post">
+                    </c:otherwise>
+                </c:choose>
+                        <form action="login" method="post">
                             <label>Email Address</label>
                             <div class="input-group">
                                 <span class="fa fa-envelope" aria-hidden="true"></span>
-                                <input type="email" placeholder="Enter Your Email" required="">
+                                <input type="text" name="username" placeholder="Enter Your Username or Email" required="">
                             </div>
                             <label>Password</label>
                             <div class="input-group">
                                 <span class="fa fa-lock" aria-hidden="true"></span>
-                                <input type="Password" placeholder="Enter Password" required="">
+                                <input type="password" name="password" placeholder="Enter Your Password" required="">
                             </div>
                             <div class="login-check">
                                 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i> Remember me</label>

@@ -11,7 +11,7 @@
  */
 package com.valdbms.members;
 
-import static com.valdbms.members.Members.MEMBERS;
+import static com.valdbms.members.Member.MEMBERS;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = MEMBERS)
-public class Members implements Serializable
+public class Member implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private int sn;
@@ -151,7 +151,7 @@ public class Members implements Serializable
         addedBy = aAddedBy;
     }
 
-    public Members()
+    public Member()
     {
     }
 

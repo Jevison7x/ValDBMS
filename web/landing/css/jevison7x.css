@@ -1,0 +1,42 @@
+/*
+ * Copyright (c) 2018, Xyneex Technologies. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * You are not meant to edit or modify this source code unless you are
+ * authorized to do so.
+ *
+ * Please contact Xyneex Technologies, #1 Orok Orok Street, Calabar, Nigeria.
+ * or visit www.xyneex.com if you need additional information or have any
+ * questions.
+*/
+/*
+    Created on : May 30, 2020, 7:32:36 PM
+    Author     : Jevison7x
+*/
+input[type="text"],
+input[type="password"]{
+    font-size: 15px;
+    color: #333;
+    text-align: left;
+    letter-spacing: 1px;
+    padding: 14px 10px;
+    width: 93%;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Raleway', sans-serif;
+}
+
+.error-msg {
+    color: #660000;
+}
+
+.success-msg {
+    color: #006600;
+}
+
+.logout-msg {
+    color: #330033;
+}

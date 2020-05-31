@@ -39,15 +39,13 @@ public class UserDAO
                     + EMAIL + ", "
                     + USER_NAME + ", "
                     + PASSWORD + ", "
-                    + ROLE + ", "
                     + DATE_CREATED
-                    + ") VALUES (?, ?, ?, ?, ?)";
+                    + ") VALUES (?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, user.getEmail());
             pst.setString(2, user.getUserName());
             pst.setString(3, encPassword);
-            pst.setString(4, user.getRole());
-            pst.setTimestamp(5, user.getDateCreated());
+            pst.setTimestamp(4, user.getDateCreated());
             int update = pst.executeUpdate();
             if(update == 1)
                 return true;
