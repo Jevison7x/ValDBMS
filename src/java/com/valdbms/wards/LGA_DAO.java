@@ -29,7 +29,7 @@ import javax.persistence.Query;
  */
 public class LGA_DAO
 {
-    public static List<String> getDistictLGAs() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static List<String> getDistinctLGAs() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
     {
         DBConfiguration dbConfig = new DBConfiguration();
         try(Connection conn = dbConfig.getDatabaseConnection())
