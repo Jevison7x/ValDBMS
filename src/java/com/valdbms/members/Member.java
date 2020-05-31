@@ -34,12 +34,17 @@ public class Member implements Serializable
     private String firstName;
     private String lastName;
     private String role;
+    private String lga;
     private int ward;
     private String bank;
     private String accountNo;
     private String email;
     private Timestamp dateAdded;
     private String addedBy;
+
+    public Member()
+    {
+    }
 
     public int getSn()
     {
@@ -151,8 +156,14 @@ public class Member implements Serializable
         addedBy = aAddedBy;
     }
 
-    public Member()
+    public String getLga()
     {
+        return lga;
+    }
+
+    public void setLga(String lga)
+    {
+        this.lga = lga;
     }
 
     public static final String MEMBERS = "members";

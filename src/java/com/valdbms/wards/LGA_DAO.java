@@ -34,7 +34,7 @@ public class LGA_DAO
         DBConfiguration dbConfig = new DBConfiguration();
         try(Connection conn = dbConfig.getDatabaseConnection())
         {
-            String sql = "SELECT DISTINT " + Ward.LGA + " FROM " + Ward.WARDS;
+            String sql = "SELECT DISTINCT " + Ward.LGA + " FROM " + Ward.WARDS;
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             List<String> lgaList = new ArrayList<>();
