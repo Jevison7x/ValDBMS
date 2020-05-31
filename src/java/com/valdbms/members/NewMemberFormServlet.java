@@ -53,7 +53,7 @@ public class NewMemberFormServlet extends HttpServlet
             }
             else
             {
-                List<String> lgaList = LGA_DAO.getDistictLGAs();
+                List<String> lgaList = LGA_DAO.getDistinctLGAs();
                 request.setAttribute("lgaList", lgaList);
                 request.getRequestDispatcher("new-member-form").forward(request, response);
             }
