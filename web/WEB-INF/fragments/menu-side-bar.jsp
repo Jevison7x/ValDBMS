@@ -24,12 +24,12 @@
                             </li>
                             <li>
                                 <a href="members" class="ajax-link">
-                                    <i class="fas fa-chart-bar"></i> Members
+                                    <i class="fas fa-users"></i> Members
                                 </a>
                             </li>
                             <li>
                                 <a href="new-member" class="ajax-link">
-                                    <i class="fas fa-chart-bar"></i> Add New Member
+                                    <i class="fas fa-user-plus"></i> Add New Member
                                 </a>
                             </li>
                         </ul>

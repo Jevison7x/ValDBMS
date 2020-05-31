@@ -26,18 +26,18 @@
                     <div class="container-fluid">
                         <ul class="navbar-mobile__list list-unstyled">
                             <li>
-                                <a class="ajax-link" href="home">
+                                <a href="home" class="ajax-link">
                                     <i class="fas fa-tachometer-alt"></i> Dashboard
                                 </a>
                             </li>
                             <li>
-                                <a class="ajax-link" href="members">
-                                    <i class="fas fa-chart-bar"></i> Members
+                                <a href="members" class="ajax-link">
+                                    <i class="fas fa-users"></i> Members
                                 </a>
                             </li>
                             <li>
-                                <a class="ajax-link" href="new-member">
-                                    <i class="fas fa-table"></i> Add New Member
+                                <a href="new-member" class="ajax-link">
+                                    <i class="fas fa-user-plus"></i> Add New Member
                                 </a>
                             </li>
                         </ul>

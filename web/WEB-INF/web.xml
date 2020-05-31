@@ -74,6 +74,14 @@
         <servlet-name>404 Page (JSP)</servlet-name>
         <jsp-file>/WEB-INF/error-pages/404.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>New Member Form Servlet</servlet-name>
+        <servlet-class>com.valdbms.members.NewMemberFormServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>New Member Form (JSP)</servlet-name>
+        <jsp-file>/WEB-INF/dashboard-pages/new-member.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login Servlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -117,6 +125,14 @@
     <servlet-mapping>
         <servlet-name>404 Page (JSP)</servlet-name>
         <url-pattern>/dashboard/404</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>New Member Form Servlet</servlet-name>
+        <url-pattern>/dashboard/new-member</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>New Member Form (JSP)</servlet-name>
+        <url-pattern>/dashboard/new-member-form</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
