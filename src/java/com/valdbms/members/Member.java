@@ -31,12 +31,16 @@ public class Member implements Serializable
     private int sn;
     @Id
     private String mobileNo;
+    private String title;
     private String firstName;
+    private String middleName;
     private String lastName;
     private String role;
+    private String state;
     private String lga;
     private int ward;
     private String bank;
+    private String accountName;
     private String accountNo;
     private String email;
     private Timestamp dateAdded;
@@ -166,12 +170,56 @@ public class Member implements Serializable
         this.lga = lga;
     }
 
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getMiddleName()
+    {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName)
+    {
+        this.middleName = middleName;
+    }
+
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
+    public String getAccountName()
+    {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName)
+    {
+        this.accountName = accountName;
+    }
+
     public static final String MEMBERS = "members";
     public static final String SN = "sn";
     public static final String MOBILE_NO = "mobileNo";
+    public static final String TITLE = "title";
     public static final String FIRST_NAME = "firstName";
+    public static final String MIDDLE_NAME = "middleName";
     public static final String LAST_NAME = "lastName";
     public static final String ROLE = "role";
+    public static final String STATE = "state";
+    public static final String LGA = "lga";
     public static final String WARD = "ward";
     public static final String BANK = "bank";
     public static final String ACCOUNT_NO = "accountNo";

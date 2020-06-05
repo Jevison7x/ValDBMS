@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Business Login Form Responsive Widget Template :: w3layouts</title>
+        <title>Val DBMS</title>
         <!-- Meta-Tags -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
@@ -43,8 +43,8 @@
                 <div class="agile_info">
                     <div class="w3l_form">
                         <div class="left_grid_info">
-                            <h1>Manage Your Business Account</h1>
-                            <p>Donec dictum nisl nec mi lacinia, sed maximus tellus eleifend. Proin molestie cursus sapien ac eleifend.</p>
+                            <h1>Val DBMS</h1>
+                            <p>Database Management System for L.G.A. Records.</p>
                             <img src="landing/images/image.jpg" alt="" />
                         </div>
                     </div>
@@ -90,7 +90,7 @@
             </div>
             <!-- footer -->
             <div class="footer">
-                <p>&copy; 2019 Business login form. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="blank">W3layouts</a></p>
+                <p>&copy; 2020 ValDBMS</p>
             </div>
             <!-- footer -->
         </div>

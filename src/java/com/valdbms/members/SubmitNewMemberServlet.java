@@ -11,20 +11,24 @@
  */
 package com.valdbms.members;
 
+import com.valdbms.users.User;
+import com.valdbms.util.DateTimeUtil;
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
+import javax.persistence.EntityExistsException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Jevison7x
+ * @author Ugimson
+ * @since May 31, 2020 10:24:08 PM
  */
-public class MembersListServlet extends HttpServlet
+public class SubmitNewMemberServlet extends HttpServlet
 {
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -36,15 +40,57 @@ public class MembersListServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession(false);
+        User user = (User)session.getAttribute("user");
+        String title = request.getParameter("title");
+        String mobileNo = request.getParameter("phoneNumber");
+        String firstName = request.getParameter("firstName");
+        String middleName = request.getParameter("middleName");
+        String lastName = request.getParameter("lastName");
+        String role = request.getParameter("role");
+        String state = request.getParameter("state");
+        String lga = request.getParameter("lga");
+        String $ward = request.getParameter("ward");
+        String bank = request.getParameter("bank");
+        String accountNo = request.getParameter("accountNo");
+        String accountName = request.getParameter("accountName");
+        String email = request.getParameter("email");
+        String addedBy = user.getUserName();
         try
         {
-            List<Member> members = MembersDAO.getAllMembers();
-            request.setAttribute("members", members);
-            request.getRequestDispatcher("members-page").forward(request, response);
+            int ward = Integer.parseInt($ward);
+            Member member = new Member();
+            member.setTitle(title);
+            member.setMobileNo(mobileNo);
+            member.setFirstName(firstName);
+            member.setMiddleName(middleName);
+            member.setLastName(lastName);
+            member.setRole(role);
+            member.setState(state);
+            member.setLga(lga);
+            member.setWard(ward);
+            member.setBank(bank);
+            member.setAccountNo(accountNo);
+            member.setAccountName(accountName);
+            member.setEmail(email);
+            member.setDateAdded(DateTimeUtil.getTodayTimeZone());
+            member.setAddedBy(addedBy);
+            MembersDAO.createNewMember(member);
+            out.print("success");
         }
         catch(Exception xcp)
         {
-            throw new RuntimeException(xcp);
+            if(xcp instanceof EntityExistsException)
+                out.print("The phone number " + mobileNo + " already exists.");
+            else if(xcp instanceof NumberFormatException)
+                out.print("Please enter a valid integer number for the ward, " + $ward + " is not a valid integer.");
+            else
+                out.print(xcp.getMessage());
+        }
+        finally
+        {
+            out.close();
         }
     }
 

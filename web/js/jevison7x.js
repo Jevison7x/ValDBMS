@@ -27,6 +27,13 @@ var paceObject = {
             pageInit: function(){
                 initMembersPage();
             }
+        },
+        {
+            pageId: 'new-member',
+            pageInit: function(){
+                initFormActions();
+                initNewMemberSubmitFormEvent();
+            }
         }
     ],
     e404: '404',
@@ -59,5 +66,109 @@ function hideProgress(){
 
 function initMembersPage(){
     $('#members-table').DataTable();
+}
+
+function initFormActions(){
+    $('#add-lga').click(function(){
+        $('#lga-select').addClass('hidden');
+        $('#lga').removeClass('hidden');
+        $('#add-lga').parent().addClass('hidden');
+        $('#select-lga').parent().removeClass('hidden');
+    });
+
+    $('#select-lga').click(function(){
+        $('#lga-select').removeClass('hidden');
+        $('#lga').addClass('hidden');
+        $('#add-lga').parent().removeClass('hidden');
+        $('#select-lga').parent().addClass('hidden');
+    });
+
+    $('#add-ward').click(function(){
+        $('#ward-select').addClass('hidden');
+        $('#ward').removeClass('hidden');
+        $('#add-ward').parent().addClass('hidden');
+        $('#select-ward').parent().removeClass('hidden');
+    });
+
+    $('#select-ward').click(function(){
+        $('#ward-select').removeClass('hidden');
+        $('#ward').addClass('hidden');
+        $('#add-ward').parent().removeClass('hidden');
+        $('#select-ward').parent().addClass('hidden');
+    });
+
+    $('#add-role').click(function(){
+        $('#role-select').addClass('hidden');
+        $('#role').removeClass('hidden');
+        $('#add-role').parent().addClass('hidden');
+        $('#select-role').parent().removeClass('hidden');
+    });
+
+    $('#select-role').click(function(){
+        $('#role-select').removeClass('hidden');
+        $('#role').addClass('hidden');
+        $('#add-role').parent().removeClass('hidden');
+        $('#select-role').parent().addClass('hidden');
+    });
+
+    $('#add-bank').click(function(){
+        $('#bank-select').addClass('hidden');
+        $('#bank').removeClass('hidden');
+        $('#add-bank').parent().addClass('hidden');
+        $('#select-bank').parent().removeClass('hidden');
+    });
+
+    $('#select-bank').click(function(){
+        $('#bank-select').removeClass('hidden');
+        $('#bank').addClass('hidden');
+        $('#add-bank').parent().removeClass('hidden');
+        $('#select-bank').parent().addClass('hidden');
+    });
+}
+
+function initNewMemberSubmitFormEvent()
+{
+    $('#new-member-form').submit(function(event){
+        event.preventDefault();
+        var title = $('#title').val();
+        var firstName = $('#first-name').val().trim();
+        var middleName = $('#middle-name').val().trim();
+        var lastName = $('#last-name').val().trim();
+        var phoneNumber = $('#phone-number').val().trim();
+        var email = $('#email').val().trim();
+        var state = $('#state').val().trim();
+        var lga = $('#lga').val().trim();
+        var ward = $('#ward').val().trim();
+        var role = $('#role').val().trim();
+        var bank = $('#bank').val().trim();
+        var accountNo = $('#account-no').val().trim();
+        var accountName = $('#account-name').val().trim();
+
+        $.ajax({
+            url: 'submit-new-member',
+            dataType: 'text',
+            data: {title: title, firstName: firstName, middleName: middleName,
+                lastName: lastName, phoneNumber: phoneNumber, email: email,
+                state: state, lga: lga, ward: ward, role: role,
+                bank: bank, accountNo: accountNo, accountName: accountName
+            },
+            method: 'POST',
+            beforeSend: function(xhr){
+                loadProgress();
+            },
+            complete: function(jqXHR, textStatus){
+                hideProgress();
+            },
+            success: function(data, textStatus, jqXHR){
+                if(data === 'success')
+                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject);
+                else
+                    $('.card-header').html('<strong><i class="fas fa-warning"></i> ' + data + '</strong>').addClass('error-in-form');
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                $('.card-header').html('<strong><i class="fas fa-warning"></i> An unknown error occured, please refresh this page.</strong>').addClass('error-in-form');
+            }
+        });
+    });
 }
 
