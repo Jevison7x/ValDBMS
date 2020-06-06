@@ -17,13 +17,17 @@
                                         <thead>
                                             <tr>
                                                 <th>SN</th>
+                                                <th>TITLE</th>
                                                 <th>FIRST NAME</th>
                                                 <th>SURNAME</th>
                                                 <th>ROLE</th>
                                                 <th>MOBILE NO</th>
+                                                <th>STATE</th>
+                                                <th>LGA</th>
                                                 <th>WARD</th>
                                                 <th>BANK</th>
                                                 <th>ACCOUNT NO</th>
+                                                <th>ACCOUNT NAME</th>
                                                 <th>EMAIL</th>
                                             </tr>
                                         </thead>
@@ -31,13 +35,17 @@
                                         <c:forEach var="member" items="${members}">
                                             <tr>
                                                 <td class="text-right">${member.sn}</td>
+                                                <td>${member.title}</td>
                                                 <td>${member.firstName}</td>
                                                 <td>${member.lastName}</td>
                                                 <td>${member.role}</td>
                                                 <td>${member.mobileNo}</td>
+                                                <td>${member.state}</td>
+                                                <td>${member.lga}</td>
                                                 <td class="text-right">${member.ward}</td>
                                                 <td>${member.bank}</td>
                                                 <td class="text-right">${member.accountNo}</td>
+                                                <td>${member.accountName}</td>
                                                 <td>${member.email}</td>
                                             </tr>
                                         </c:forEach>
