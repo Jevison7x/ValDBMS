@@ -12,7 +12,10 @@
 package com.valdbms.wards;
 
 import com.valdbms.database.DBConfiguration;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,6 +32,45 @@ public class WardDAO
             em.getTransaction().begin();
             em.persist(ward);
             em.getTransaction().commit();
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
+    public static List<Ward> getWards(String lga)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            String sql = "SELECT * FROM " + Ward.WARDS + " WHERE " + Ward.LGA + " = ?";
+            Query q = em.createNativeQuery(sql, Ward.class);
+            q.setParameter(1, lga);
+            List<Ward> wards = q.getResultList();
+            return wards;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
+    public static Ward getWard(String wardName, String lga)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            String sql = "SELECT * FROM " + Ward.WARDS + " WHERE " + Ward.WARD + " = ? AND " + Ward.LGA + " = ?";
+            Query q = em.createNativeQuery(sql, Ward.class);
+            q.setParameter(1, wardName);
+            q.setParameter(2, lga);
+            Ward ward = (Ward)q.getSingleResult();
+            return ward;
+        }
+        catch(NoResultException nre)
+        {
+            return null;
         }
         finally
         {

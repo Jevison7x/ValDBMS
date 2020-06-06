@@ -19,8 +19,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 /**
  *
@@ -41,23 +39,6 @@ public class LGA_DAO
             while(rs.next())
                 lgaList.add(rs.getString(Ward.LGA));
             return lgaList;
-        }
-    }
-
-    public static List<Ward> getWards(String lga)
-    {
-        EntityManager em = DBConfiguration.getEntityManager();
-        try
-        {
-            String sql = "SELECT * FROM " + Ward.WARDS + " WHERE " + Ward.LGA + " = ?";
-            Query q = em.createNativeQuery(sql, Ward.class);
-            q.setParameter(1, lga);
-            List<Ward> wards = q.getResultList();
-            return wards;
-        }
-        finally
-        {
-            em.close();
         }
     }
 }

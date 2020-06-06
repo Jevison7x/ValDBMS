@@ -13,6 +13,7 @@ package com.valdbms.members;
 
 import com.valdbms.wards.LGA_DAO;
 import com.valdbms.wards.Ward;
+import com.valdbms.wards.WardDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -44,7 +45,7 @@ public class NewMemberFormServlet extends HttpServlet
             if(request.getParameter("getWards") != null)
             {
                 String lga = request.getParameter("lga");
-                List<Ward> wards = LGA_DAO.getWards(lga);
+                List<Ward> wards = WardDAO.getWards(lga);
                 JSONArray jSONArray = new JSONArray(wards);
                 try(PrintWriter out = response.getWriter())
                 {

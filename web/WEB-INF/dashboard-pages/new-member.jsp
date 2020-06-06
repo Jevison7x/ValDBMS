@@ -47,6 +47,7 @@
                                                                         <option value="Elder">Elder</option>
                                                                         <option value="Barr.">Barr.</option>
                                                                         <option value="Arct.">Arct.</option>
+                                                                        <option value="Hon.">Hon.</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -191,7 +192,7 @@
                                                                     <div class="input-group-addon">
                                                                         <i class="fa fa-navicon"></i>
                                                                     </div>
-                                                                    <input type="number" name="ward" id="ward" class="form-control-success form-control hidden" placeholder="Add New Ward" required/>
+                                                                    <input type="text" name="ward" id="ward" class="form-control-success form-control hidden" placeholder="Add New Ward" required/>
                                                                     <select name="ward-select" id="ward-select" class="form-control">
                                                                         <option value="">Please select</option>
                                                                     </select>

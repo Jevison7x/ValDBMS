@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet
             String username = request.getParameter("username").trim();
             String password = request.getParameter("password").trim();
             User user = UserDAO.loginUser(username, password);
-            HttpSession session = request.getSession(false);
+            HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
             if(request.getParameter("checkbox") != null)
                 session.setMaxInactiveInterval(60 * 60 * 24 * 7);

@@ -38,7 +38,7 @@ public class Member implements Serializable
     private String role;
     private String state;
     private String lga;
-    private int ward;
+    private String ward;
     private String bank;
     private String accountName;
     private String accountNo;
@@ -100,12 +100,12 @@ public class Member implements Serializable
         role = aRole;
     }
 
-    public int getWard()
+    public String getWard()
     {
         return ward;
     }
 
-    public void setWard(int aWard)
+    public void setWard(String aWard)
     {
         ward = aWard;
     }

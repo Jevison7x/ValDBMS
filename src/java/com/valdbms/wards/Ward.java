@@ -28,11 +28,22 @@ public class Ward implements Serializable
 {
     private static final long serialVersionUID = 1L;
     @Id
+    private int sn;
     private String ward;
     private String lga;
 
     public Ward()
     {
+    }
+
+    public int getSn()
+    {
+        return sn;
+    }
+
+    public void setSn(int sn)
+    {
+        this.sn = sn;
     }
 
     public String getWard()

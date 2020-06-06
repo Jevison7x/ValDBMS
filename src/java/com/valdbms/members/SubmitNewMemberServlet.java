@@ -13,6 +13,8 @@ package com.valdbms.members;
 
 import com.valdbms.users.User;
 import com.valdbms.util.DateTimeUtil;
+import com.valdbms.wards.Ward;
+import com.valdbms.wards.WardDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.EntityExistsException;
@@ -51,7 +53,7 @@ public class SubmitNewMemberServlet extends HttpServlet
         String role = request.getParameter("role");
         String state = request.getParameter("state");
         String lga = request.getParameter("lga");
-        String $ward = request.getParameter("ward");
+        String ward = request.getParameter("ward");
         String bank = request.getParameter("bank");
         String accountNo = request.getParameter("accountNo");
         String accountName = request.getParameter("accountName");
@@ -59,7 +61,15 @@ public class SubmitNewMemberServlet extends HttpServlet
         String addedBy = user.getUserName();
         try
         {
-            int ward = Integer.parseInt($ward);
+            Ward wardObj = WardDAO.getWard(ward, lga);
+            if(wardObj == null)
+            {
+                wardObj = new Ward();
+                wardObj.setWard(ward);
+                wardObj.setLga(lga);
+                WardDAO.createNewWard(wardObj);
+            }
+
             Member member = new Member();
             member.setTitle(title);
             member.setMobileNo(mobileNo);
@@ -83,8 +93,6 @@ public class SubmitNewMemberServlet extends HttpServlet
         {
             if(xcp instanceof EntityExistsException)
                 out.print("The phone number " + mobileNo + " already exists.");
-            else if(xcp instanceof NumberFormatException)
-                out.print("Please enter a valid integer number for the ward, " + $ward + " is not a valid integer.");
             else
                 out.print(xcp.getMessage());
         }
