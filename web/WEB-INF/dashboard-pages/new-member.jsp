@@ -167,7 +167,7 @@
                                                             <div class="has-success form-group">
                                                                 <label for="lga" class="form-control-label">L.G.A.: </label>
                                                                 <div class="input-group">
-                                                                    <div class="input-group-addon">
+                                                                    <div class="input-group-addon" id="lga-addon">
                                                                         <i class="fa fa-weight"></i>
                                                                     </div>
                                                                     <input type="text" name="lga" id="lga" class="form-control-success form-control hidden" placeholder="Add New L.G.A." required/>
@@ -189,7 +189,7 @@
                                                             <div class="has-success form-group">
                                                                 <label for="ward" class="form-control-label">Ward: </label>
                                                                 <div class="input-group">
-                                                                    <div class="input-group-addon">
+                                                                    <div class="input-group-addon" id="ward-addon">
                                                                         <i class="fa fa-navicon"></i>
                                                                     </div>
                                                                     <input type="text" name="ward" id="ward" class="form-control-success form-control hidden" placeholder="Add New Ward" required/>

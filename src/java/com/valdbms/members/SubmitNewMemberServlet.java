@@ -11,6 +11,8 @@
  */
 package com.valdbms.members;
 
+import com.valdbms.banks.Bank;
+import com.valdbms.banks.BankDAO;
 import com.valdbms.users.User;
 import com.valdbms.util.DateTimeUtil;
 import com.valdbms.wards.Ward;
@@ -61,13 +63,22 @@ public class SubmitNewMemberServlet extends HttpServlet
         String addedBy = user.getUserName();
         try
         {
-            Ward wardObj = WardDAO.getWard(ward, lga);
+            Ward wardObj = WardDAO.getWard(state, lga, ward);
             if(wardObj == null)
             {
                 wardObj = new Ward();
                 wardObj.setWard(ward);
                 wardObj.setLga(lga);
+                wardObj.setState(state);
                 WardDAO.createNewWard(wardObj);
+            }
+
+            Bank bankObj = BankDAO.getBank(bank);
+            if(bankObj == null)
+            {
+                bankObj = new Bank();
+                bankObj.setBank(bank);
+                BankDAO.createBank(bankObj);
             }
 
             Member member = new Member();

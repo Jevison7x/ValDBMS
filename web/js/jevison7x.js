@@ -124,6 +124,77 @@ function initFormActions(){
         $('#add-bank').parent().removeClass('hidden');
         $('#select-bank').parent().addClass('hidden');
     });
+
+    $('#state').change(function(){
+        var state = $(this).val();
+        var $lgaSelect = $('#lga-select');
+        $.ajax({
+            url: 'new-member',
+            data: {getLGAs: true, state: state},
+            dataType: 'JSON',
+            beforeSend: function(xhr){
+                $lgaSelect.html('');
+                $lgaSelect.append('<option value="">Loading L.G.A.s ...</option>');
+                $lgaSelect.attr('disabled', 'true');
+                $('#lga-addon i').removeClass('fa-weight').addClass('fa-refresh').addClass('fa-spin');
+            },
+            complete: function(jqXHR, textStatus){
+                $lgaSelect.removeAttr('disabled');
+                $('#lga-addon i').removeClass('fa-refresh').removeClass('fa-spin').addClass('fa-weight');
+            },
+            success: function(data, textStatus, jqXHR){
+                $lgaSelect.html('');
+                $lgaSelect.append('<option value="">Please select</option>');
+                for(var i = 0; i < data.length; i++){
+                    $lgaSelect.append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: 'Please reload this page and try again.'
+                });
+            }
+        });
+    });
+
+    $('#lga-select').change(function(){
+        var lga = $(this).val();
+        var state = $('#state').val();
+        var $wardSelect = $('#ward-select');
+        $.ajax({
+            url: 'new-member',
+            data: {getWards: true, state: state, lga: lga},
+            dataType: 'JSON',
+            beforeSend: function(xhr){
+                $wardSelect.html('');
+                $wardSelect.append('<option value="">Loading Wards ...</option>');
+                $wardSelect.attr('disabled', 'true');
+                $('#ward-addon i').removeClass('fa-navicon').addClass('fa-refresh').addClass('fa-spin');
+            },
+            complete: function(jqXHR, textStatus){
+                $wardSelect.removeAttr('disabled');
+                $('#ward-addon i').removeClass('fa-refresh').removeClass('fa-spin').addClass('fa-navicon');
+            },
+            success: function(data, textStatus, jqXHR){
+                $wardSelect.html('');
+                $wardSelect.append('<option value="">Please select</option>');
+                for(var i = 0; i < data.length; i++){
+                    $wardSelect.append('<option value="' + data[i].ward + '">' + data[i].ward + '</option>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: 'Please reload this page and try again.'
+                });
+            }
+        });
+    });
 }
 
 function initNewMemberSubmitFormEvent()

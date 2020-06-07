@@ -14,9 +14,9 @@ package com.valdbms.wards;
 import com.valdbms.database.DBConfiguration;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +27,15 @@ import java.util.List;
  */
 public class LGA_DAO
 {
-    public static List<String> getDistinctLGAs() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static List<String> getDistinctLGAs(String state) throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
     {
         DBConfiguration dbConfig = new DBConfiguration();
         try(Connection conn = dbConfig.getDatabaseConnection())
         {
-            String sql = "SELECT DISTINCT " + Ward.LGA + " FROM " + Ward.WARDS;
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT DISTINCT " + Ward.LGA + " FROM " + Ward.WARDS + " WHERE " + Ward.STATE + " = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, state);
+            ResultSet rs = pst.executeQuery();
             List<String> lgaList = new ArrayList<>();
             while(rs.next())
                 lgaList.add(rs.getString(Ward.LGA));

@@ -39,14 +39,15 @@ public class WardDAO
         }
     }
 
-    public static List<Ward> getWards(String lga)
+    public static List<Ward> getWards(String state, String lga)
     {
         EntityManager em = DBConfiguration.getEntityManager();
         try
         {
-            String sql = "SELECT * FROM " + Ward.WARDS + " WHERE " + Ward.LGA + " = ?";
+            String sql = "SELECT * FROM " + Ward.WARDS + " WHERE " + Ward.STATE + " = ? AND " + Ward.LGA + " = ?";
             Query q = em.createNativeQuery(sql, Ward.class);
-            q.setParameter(1, lga);
+            q.setParameter(1, state);
+            q.setParameter(2, lga);
             List<Ward> wards = q.getResultList();
             return wards;
         }
@@ -56,15 +57,19 @@ public class WardDAO
         }
     }
 
-    public static Ward getWard(String wardName, String lga)
+    public static Ward getWard(String state, String lga, String wardName)
     {
         EntityManager em = DBConfiguration.getEntityManager();
         try
         {
-            String sql = "SELECT * FROM " + Ward.WARDS + " WHERE " + Ward.WARD + " = ? AND " + Ward.LGA + " = ?";
+            String sql = "SELECT * FROM " + Ward.WARDS + " "
+                    + "WHERE " + Ward.WARD + " = ? "
+                    + "AND " + Ward.LGA + " = ? "
+                    + "AND " + Ward.STATE + " = ?";
             Query q = em.createNativeQuery(sql, Ward.class);
             q.setParameter(1, wardName);
             q.setParameter(2, lga);
+            q.setParameter(3, state);
             Ward ward = (Ward)q.getSingleResult();
             return ward;
         }

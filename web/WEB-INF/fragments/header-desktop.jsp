@@ -37,9 +37,9 @@
                                                     </div>
                                                     <div class="content">
                                                         <h5 class="name">
-                                                            <a href="#">Jevison7x</a>
+                                                            <a href="#">${user.userName}</a>
                                                         </h5>
-                                                        <span class="email">johndoe@example.com</span>
+                                                            <span class="email">${user.email}</span>
                                                     </div>
                                                 </div>
                                                 <div class="account-dropdown__body">

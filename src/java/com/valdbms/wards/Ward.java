@@ -31,6 +31,7 @@ public class Ward implements Serializable
     private int sn;
     private String ward;
     private String lga;
+    private String state;
 
     public Ward()
     {
@@ -66,7 +67,18 @@ public class Ward implements Serializable
         this.lga = lga;
     }
 
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
     public static final String WARDS = "wards";
     public static final String WARD = "ward";
     public static final String LGA = "lga";
+    public static final String STATE = "state";
 }

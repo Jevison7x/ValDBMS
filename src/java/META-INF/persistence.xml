@@ -7,6 +7,7 @@
         <class>com.valdbms.roles.Role</class>
         <class>com.valdbms.users.User</class>
         <class>com.valdbms.wards.Ward</class>
+        <class>com.valdbms.banks.Bank</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/royalsee_valdbms"/>

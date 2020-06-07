@@ -39,25 +39,33 @@ public class NewMemberFormServlet extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
         try
         {
             if(request.getParameter("getWards") != null)
             {
                 String lga = request.getParameter("lga");
-                List<Ward> wards = WardDAO.getWards(lga);
+                String state = request.getParameter("state");
+                List<Ward> wards = WardDAO.getWards(state, lga);
                 JSONArray jSONArray = new JSONArray(wards);
                 try(PrintWriter out = response.getWriter())
                 {
+                    response.setContentType("application/json");
+                    out.print(jSONArray);
+                }
+            }
+            else if(request.getParameter("getLGAs") != null)
+            {
+                String state = request.getParameter("state");
+                List<String> lgaList = LGA_DAO.getDistinctLGAs(state);
+                JSONArray jSONArray = new JSONArray(lgaList);
+                try(PrintWriter out = response.getWriter())
+                {
+                    response.setContentType("application/json");
                     out.print(jSONArray);
                 }
             }
             else
-            {
-                List<String> lgaList = LGA_DAO.getDistinctLGAs();
-                request.setAttribute("lgaList", lgaList);
                 request.getRequestDispatcher("new-member-form").forward(request, response);
-            }
         }
         catch(Exception xcp)
         {
