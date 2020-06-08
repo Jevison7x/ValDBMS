@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:useBean id="member" class="com.valdbms.members.Member"/>
                     <!-- MAIN CONTENT-->
                     <div id="new-member" class="main-content">
                         <style type="text/css" scoped="">
@@ -215,9 +217,13 @@
                                                                     <input type="text" name="role" id="role" class="form-control-success form-control hidden" placeholder="Add New Role" required/>
                                                                     <select name="role-select" id="role-select" class="form-control">
                                                                         <option value="">Please select</option>
+                                                                    <c:forEach var="role" items="${role}">
+                                                                        <option value="${role}">${role}</option>
+                                                                    </c:forEach>
                                                                     </select>
                                                                     <div class="input-group-addon hidden">
                                                                         <button id="select-role" type="button"><i class="fa fa-arrow-down"></i> Select Role</button>
+
                                                                     </div>
                                                                     <div class="input-group-addon">
                                                                         <button id="add-role" type="button"><i class="fa fa-plus"></i> Add New Role</button>

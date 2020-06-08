@@ -11,6 +11,8 @@
  */
 package com.valdbms.members;
 
+import com.valdbms.banks.BankDAO;
+import com.valdbms.roles.RolesDAO;
 import com.valdbms.wards.LGA_DAO;
 import com.valdbms.wards.Ward;
 import com.valdbms.wards.WardDAO;
@@ -65,7 +67,13 @@ public class NewMemberFormServlet extends HttpServlet
                 }
             }
             else
+            {
+                List<String> roleList = RolesDAO.getDistinctRoles();
+                List<String> banksList = BankDAO.getDistinctBanks();
+                request.setAttribute("role", roleList);
+                request.setAttribute("bank", banksList);
                 request.getRequestDispatcher("new-member-form").forward(request, response);
+            }
         }
         catch(Exception xcp)
         {
