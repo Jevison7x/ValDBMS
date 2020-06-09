@@ -242,7 +242,7 @@
                                                                     <input type="text" name="role" id="role" class="form-control-success form-control hidden" placeholder="Add New Role" required/>
                                                                     <select name="role-select" id="role-select" class="form-control">
                                                                         <option value="">Please select</option>
-                                                                    <c:forEach var="role" items="${role}">
+                                                                    <c:forEach var="role" items="${roleList}">
                                                                         <option value="${role}">${role}</option>
                                                                     </c:forEach>
                                                                     </select>
@@ -269,6 +269,9 @@
                                                                     <input type="text" name="bank" id="bank" class="form-control-success form-control hidden" placeholder="Enter a Bank Name" required/>
                                                                     <select name="bank-select" id="bank-select" class="form-control">
                                                                         <option value="">Please select</option>
+                                                                    <c:forEach var="bank" items="${banksList}">
+                                                                        <option value="${bank}">${bank}</option>
+                                                                    </c:forEach>
                                                                     </select>
                                                                     <div class="input-group-addon hidden">
                                                                         <button id="select-bank" type="button"><i class="fa fa-arrow-down"></i> Select Bank</button>
