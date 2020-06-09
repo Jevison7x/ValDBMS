@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -39,6 +40,35 @@ public class RolesDAO
             while(rs.next())
                 roleList.add(rs.getString(Role.ROLE));
             return roleList;
+        }
+    }
+
+    public static void createRole(Role role)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+            em.persist(role);
+            em.getTransaction().commit();
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
+    public static Role getRole(String role)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            Role r = em.find(Role.class, role);
+            return r;
+        }
+        finally
+        {
+            em.close();
         }
     }
 }

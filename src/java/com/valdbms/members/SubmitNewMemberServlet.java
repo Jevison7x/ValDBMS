@@ -13,6 +13,8 @@ package com.valdbms.members;
 
 import com.valdbms.banks.Bank;
 import com.valdbms.banks.BankDAO;
+import com.valdbms.roles.Role;
+import com.valdbms.roles.RolesDAO;
 import com.valdbms.users.User;
 import com.valdbms.util.DateTimeUtil;
 import com.valdbms.wards.Ward;
@@ -79,6 +81,16 @@ public class SubmitNewMemberServlet extends HttpServlet
                 bankObj = new Bank();
                 bankObj.setBank(bank);
                 BankDAO.createBank(bankObj);
+            }
+
+            Role r = RolesDAO.getRole(role);
+            if(r == null)
+            {
+                r = new Role();
+                r.setRole(role);
+                r.setAddedBy(addedBy);
+                r.setDateAdded(DateTimeUtil.getTodayTimeZone());
+                RolesDAO.createRole(r);
             }
 
             Member member = new Member();

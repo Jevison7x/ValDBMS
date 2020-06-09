@@ -70,8 +70,8 @@ public class NewMemberFormServlet extends HttpServlet
             {
                 List<String> roleList = RolesDAO.getDistinctRoles();
                 List<String> banksList = BankDAO.getDistinctBanks();
-                request.setAttribute("role", roleList);
-                request.setAttribute("bank", banksList);
+                request.setAttribute("roleList", roleList);
+                request.setAttribute("banksList", banksList);
                 request.getRequestDispatcher("new-member-form").forward(request, response);
             }
         }
