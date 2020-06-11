@@ -11,6 +11,7 @@
  */
 package com.valdbms.security;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.valdbms.adminpins.AdminPinDAO;
 import com.valdbms.users.User;
 import com.valdbms.users.UserDAO;
@@ -41,11 +42,13 @@ public class CreateAccountServlet extends HttpServlet
             throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
+        String userName = null;
         try
         {
-            String userName = request.getParameter("userName");
+            userName = request.getParameter("userName");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String pin = request.getParameter("pin").trim();
             Digester digester = new Digester();
             String encPassword = digester.doDigest(password);
             if(UserDAO.getUser(email) != null)
@@ -54,7 +57,10 @@ public class CreateAccountServlet extends HttpServlet
                 throw new IllegalStateException("The username: " + userName + " has already been taken.");
             User user = validateUser(request);
             if(UserDAO.createNewUser(user, encPassword))
+            {
+                AdminPinDAO.updatePin(userName, pin);
                 response.sendRedirect("login-page?login=1");
+            }
             else
             {
                 request.setAttribute("errorMessage", "There was an unknown error, your account was not created successfully!");
@@ -67,6 +73,12 @@ public class CreateAccountServlet extends HttpServlet
             if(xcp instanceof IllegalStateException || xcp instanceof IllegalArgumentException)
             {
                 request.setAttribute("errorMessage", xcp.getMessage());
+                RequestDispatcher dispatcher = request.getRequestDispatcher("create-account");
+                dispatcher.forward(request, response);
+            }
+            else if(xcp instanceof MySQLIntegrityConstraintViolationException)
+            {
+                request.setAttribute("errorMessage", userName + " already exists.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("create-account");
                 dispatcher.forward(request, response);
             }

@@ -128,7 +128,7 @@ public class DateTimeUtil
     public static Timestamp getTodayTimeZone()
     {
         GregorianCalendar todayCal = new GregorianCalendar();
-        todayCal.add(Calendar.HOUR_OF_DAY, 6);
+        todayCal.add(Calendar.HOUR_OF_DAY, 5);
         return new Timestamp(todayCal.getTime().getTime());
     }
 
@@ -136,7 +136,7 @@ public class DateTimeUtil
     {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.HOUR_OF_DAY, 6);
+        cal.add(Calendar.HOUR_OF_DAY, 5);
         return new Timestamp(cal.getTime().getTime());
     }
 

@@ -12,7 +12,10 @@
 package com.valdbms.adminpins;
 
 import com.valdbms.database.DBConfiguration;
+import com.valdbms.util.DateTimeUtil;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -59,5 +62,38 @@ public class AdminPinDAO
                 return false;
         else
             return false;
+    }
+
+    public static List<AdminPin> getAdminPins()
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            String sql = "SELECT * FROM " + AdminPin.ADMIN_PINS;
+            Query q = em.createNativeQuery(sql, AdminPin.class);
+            List<AdminPin> adminPins = q.getResultList();
+            return adminPins;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
+    public static void updatePin(String userName, String pin)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+            AdminPin adminPin = em.find(AdminPin.class, pin);
+            adminPin.setUsedBy(userName);
+            adminPin.setDateUsed(DateTimeUtil.getTodayTimeZone());
+            em.getTransaction().commit();
+        }
+        finally
+        {
+            em.close();
+        }
     }
 }

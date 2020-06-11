@@ -86,6 +86,18 @@
         <servlet-name>Submit New Member Servlet</servlet-name>
         <servlet-class>com.valdbms.members.SubmitNewMemberServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Get Admin Pins Servlet</servlet-name>
+        <servlet-class>com.valdbms.adminpins.GetAdminPinsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Admin Pins Page (JSP)</servlet-name>
+        <jsp-file>/WEB-INF/dashboard-pages/admin-pins.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Generate New Pin Servlet</servlet-name>
+        <servlet-class>com.valdbms.adminpins.GenerateNewPinServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login Servlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -141,6 +153,18 @@
     <servlet-mapping>
         <servlet-name>Submit New Member Servlet</servlet-name>
         <url-pattern>/dashboard/submit-new-member</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Get Admin Pins Servlet</servlet-name>
+        <url-pattern>/dashboard/pin-numbers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Admin Pins Page (JSP)</servlet-name>
+        <url-pattern>/dashboard/admin-pins</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Generate New Pin Servlet</servlet-name>
+        <url-pattern>/dashboard/generate-pin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -34,6 +34,12 @@ var paceObject = {
                 initFormActions();
                 initNewMemberSubmitFormEvent();
             }
+        },
+        {
+            pageId: 'pin-numbers',
+            pageInit: function(){
+                initPinNumbersPage();
+            }
         }
     ],
     e404: '404',
@@ -238,6 +244,32 @@ function initNewMemberSubmitFormEvent()
             },
             error: function(jqXHR, textStatus, errorThrown){
                 $('.card-header').html('<strong><i class="fas fa-warning"></i> An unknown error occured, please refresh this page.</strong>').addClass('error-in-form');
+            }
+        });
+    });
+}
+
+function initPinNumbersPage()
+{
+    $('#generate-pin-btn').click(function(){
+        var $btn = $(this);
+        $.ajax({
+            url: 'generate-pin',
+            dataType: 'text',
+            beforeSend: function(xhr){
+                $btn.attr('disabled', true);
+                $btn.find('i').removeClass('fa-gears').addClass('fa-refresh').addClass('fa-spin');
+            },
+            complete: function(jqXHR, textStatus){
+                $btn.removeAttr('disabled');
+                $btn.find('i').removeClass('fa-spin').removeClass('fa-refresh').addClass('fa-gears');
+            },
+            success: function(data, textStatus, jqXHR){
+                if(data === 'success')
+                    ajaxPageLoad('pin-numbers?success=true', '', paceObject);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('There was an error, please reload this page.');
             }
         });
     });

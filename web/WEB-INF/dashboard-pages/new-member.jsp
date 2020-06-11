@@ -20,31 +20,6 @@
                         </style>
                         <div class="section__content section__content--p30">
                             <div class="container-fluid">
-                                <form id="member-form-filter">
-                                    <div class="row form-group">
-                                        <div class="col col-md-9">
-                                            <div class="form-check">
-                                                <div class="checkbox">
-                                                    <label for="filter-by-role" class="form-check-label ">
-                                                            <input type="checkbox" id="filter-by-role" name="filter-by-role" value="filter-by-role" class="form-check-input">Filter by Role
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                            <div class="col col-md-2">
-                                                <select name="select" id="select" class="form-control">
-                                                    <option value="">Select Role</option>
-                                                </select>
-                                                <div class="input-group-addon hidden">
-                                                    <button id="select-lga" type="button"><i class="fa fa-arrow-down"></i> Select Role</button>
-                                                </div>
-                                            </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="container-fluid">
                                 <form id="new-member-form">
                                     <div class="row">
                                         <div class="col-md-12">

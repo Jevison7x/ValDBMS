@@ -8,7 +8,86 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id="member" class="com.valdbms.members.Member"/>
             <div id="members-page" class="main-content">
+                <style type="text/css" scoped>
+                    .j-form-group {
+                        padding-bottom: 10px;
+                    }
+
+                    .j-form-group select {
+                        max-width: 400px;
+                    }
+                </style>
                 <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <form id="member-form-filter">
+                            <div class="row form-group j-form-group">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <div class="checkbox">
+                                            <label for="filter-by-role" class="form-check-label ">
+                                                <input type="checkbox" id="filter-by-role" name="filter-by-role" value="filter-by-role" class="form-check-input">Filter by Role
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <select name="select" id="select" class="form-control" disabled>
+                                        <option value="">Select Role</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group j-form-group">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <div class="checkbox">
+                                            <label for="filter-by-state" class="form-check-label ">
+                                                <input type="checkbox" id="filter-by-state" name="filter-by-state" value="filter-by-state" class="form-check-input">Filter by State
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <select name="select" id="select" class="form-control" disabled>
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group j-form-group">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <div class="checkbox">
+                                            <label for="filter-by-ward" class="form-check-label ">
+                                                <input type="checkbox" id="filter-by-ward" name="filter-by-ward" value="filter-by-ward" class="form-check-input">Filter by Ward
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <select name="select" id="select" class="form-control" disabled>
+                                        <option value="">Select Ward</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group j-form-group">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <div class="checkbox">
+                                            <label for="filter-by-bank" class="form-check-label ">
+                                                <input type="checkbox" id="filter-by-bank" name="filter-by-bank" value="filter-by-bank" class="form-check-input">Filter by Bank
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <select name="select" id="select" class="form-control" disabled>
+                                        <option value="">Select Bank</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group j-form-group">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-filter"></i> Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">

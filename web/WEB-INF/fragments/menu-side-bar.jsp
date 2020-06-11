@@ -32,6 +32,11 @@
                                     <i class="fas fa-user-plus"></i> Add New Member
                                 </a>
                             </li>
+                            <li>
+                                <a href="pin-numbers" class="ajax-link">
+                                    <i class="fas fa-lock"></i> Pin Numbers 
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
