@@ -101,6 +101,12 @@ function initMembersPage(){
             {"data": "accountNo"},
             {"data": "accountName"},
             {"data": "email"}
+        ],
+        "columnDefs": [
+            {
+                className: "phone-number",
+                "targets": [5]
+            }
         ]
     });
 
@@ -225,6 +231,44 @@ function initMembersPage(){
         $membersTable.column(7).search(lga).draw();
         $membersTable.column(8).search(ward).draw();
         $membersTable.column(9).search(bank).draw();
+    });
+
+    $('#members-table tbody').on('click', 'tr', function(){
+        var phoneNumber = $(this).find('.phone-number').html();
+        $(this).toggleClass('selected');
+        var status = $(this).hasClass('selected') ? 'select' : 'unselect';
+        $.ajax({
+            url: 'select-member',
+            data: {phoneNumber: phoneNumber, status: status, selectType: 'single'},
+            dataType: 'text/html',
+            method: 'GET'
+        });
+    });
+
+    $('#select-all-btn').click(function(){
+        $('#members-table tbody tr').toggleClass('selected');
+    });
+
+    $('#message-launch').click(function(){
+        $('#message-modal').modal('show');
+    });
+
+    $('#personalized-message').click(function(){
+        $('#textarea-input').val('Dear ${firstName} ${lastName} ');
+    });
+
+    $('#send-message').click(function(){
+        var message = $('#textarea-input').val();
+        var phoneNumbers = '';
+        var count = $membersTable.rows({selected: true}).count();
+        console.log('selected rows: ', count);
+        /*
+         var selectedRows = $('#members-table').DataTable().row('.selected');
+         for(var i = 0; i < selectedRows.length; i++){
+         var row = selectedRows[i];
+         console.log('Row: ', row);
+         }
+         */
     });
 }
 
