@@ -222,6 +222,7 @@ public class Member implements Serializable
     public static final String LGA = "lga";
     public static final String WARD = "ward";
     public static final String BANK = "bank";
+    public static final String ACCOUNT_NAME = "accountName";
     public static final String ACCOUNT_NO = "accountNo";
     public static final String EMAIL = "email";
     public static final String DATE_ADDED = "dateAdded";

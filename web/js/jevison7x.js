@@ -71,7 +71,161 @@ function hideProgress(){
 }
 
 function initMembersPage(){
-    $('#members-table').DataTable();
+    var $membersTable = $('#members-table').DataTable({
+        "serverSide": true,
+        ajax: {
+            url: 'members?json=true',
+            dataType: 'json',
+            type: 'POST'
+        },
+        "paging": true,
+        "Filter": true,
+        "processing": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "scrollX": true,
+        "columns": [
+            {"data": "sn"},
+            {"data": "title"},
+            {"data": "firstName"},
+            {"data": "lastName"},
+            {"data": "role"},
+            {"data": "mobileNo"},
+            {"data": "state"},
+            {"data": "lga"},
+            {"data": "ward"},
+            {"data": "bank"},
+            {"data": "accountNo"},
+            {"data": "accountName"},
+            {"data": "email"}
+        ]
+    });
+
+    //Filter by role enable/disable
+    $('#filter-by-role').change(function(){
+        if(this.checked){
+            $('#role-select').removeAttr('disabled');
+        }else
+            $('#role-select').attr('disabled', true);
+    });
+    //Filter by state enable/disable
+    $('#filter-by-state').change(function(){
+        if(this.checked){
+            $('#state-select').removeAttr('disabled');
+        }else
+            $('#state-select').attr('disabled', true);
+    });
+    //Filter by LGA enable/disable
+    $('#filter-by-lga').change(function(){
+        if(this.checked){
+            $('#lga-select').removeAttr('disabled');
+        }else
+            $('#lga-select').attr('disabled', true);
+    });
+    //Filter by Ward enable/disable
+    $('#filter-by-ward').change(function(){
+        if(this.checked){
+            $('#ward-select').removeAttr('disabled');
+        }else
+            $('#ward-select').attr('disabled', true);
+    });
+    //Filter by Bank enable/disable
+    $('#filter-by-bank').change(function(){
+        if(this.checked){
+            $('#bank-select').removeAttr('disabled');
+        }else
+            $('#bank-select').attr('disabled', true);
+    });
+
+    $('#state-select').change(function(){
+        var state = $(this).val();
+        var $lgaSelect = $('#lga-select');
+        $.ajax({
+            url: 'new-member',
+            data: {getLGAs: true, state: state},
+            dataType: 'JSON',
+            beforeSend: function(xhr){
+                $lgaSelect.html('');
+                $lgaSelect.append('<option value="">Loading L.G.A.s ...</option>');
+            },
+            complete: function(jqXHR, textStatus){
+            },
+            success: function(data, textStatus, jqXHR){
+                $lgaSelect.html('');
+                $lgaSelect.append('<option value="">Please select</option>');
+                for(var i = 0; i < data.length; i++){
+                    $lgaSelect.append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: 'Please reload this page and try again.'
+                });
+            }
+        });
+    });
+
+    $('#lga-select').change(function(){
+        var lga = $(this).val();
+        var state = $('#state-select').val();
+        var $wardSelect = $('#ward-select');
+        $.ajax({
+            url: 'new-member',
+            data: {getWards: true, state: state, lga: lga},
+            dataType: 'JSON',
+            beforeSend: function(xhr){
+                $wardSelect.html('');
+                $wardSelect.append('<option value="">Loading Wards ...</option>');
+            },
+            complete: function(jqXHR, textStatus){
+            },
+            success: function(data, textStatus, jqXHR){
+                $wardSelect.html('');
+                $wardSelect.append('<option value="">Please select</option>');
+                for(var i = 0; i < data.length; i++){
+                    $wardSelect.append('<option value="' + data[i].ward + '">' + data[i].ward + '</option>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: 'Please reload this page and try again.'
+                });
+            }
+        });
+    });
+
+    $('#filter-btn').click(function(){
+        var role = '', state = '', lga = '', ward = '', bank = '';
+        if($('#filter-by-role').is(':checked')){
+            role = $('#role-select').val();
+        }
+        if($('#filter-by-state').is(':checked')){
+            state = $('#state-select').val();
+        }
+        if($('#filter-by-lga').is(':checked')){
+            lga = $('#lga-select').val();
+        }
+        if($('#filter-by-ward').is(':checked')){
+            ward = $('#ward-select').val();
+        }
+        if($('#filter-by-bank').is(':checked')){
+            bank = $('#bank-select').val();
+        }
+        $membersTable.column(4).search(role).draw();
+        $membersTable.column(6).search(state).draw();
+        $membersTable.column(7).search(lga).draw();
+        $membersTable.column(8).search(ward).draw();
+        $membersTable.column(9).search(bank).draw();
+    });
 }
 
 function initFormActions(){
@@ -168,6 +322,7 @@ function initFormActions(){
 
     $('#lga-select').change(function(){
         var lga = $(this).val();
+        $('#lga').val(lga);
         var state = $('#state').val();
         var $wardSelect = $('#ward-select');
         $.ajax({
@@ -200,6 +355,21 @@ function initFormActions(){
                 });
             }
         });
+    });
+
+    $('#ward-select').change(function(){
+        var ward = $(this).val();
+        $('#ward').val(ward);
+    });
+
+    $('#role-select').change(function(){
+        var role = $(this).val();
+        $('#role').val(role);
+    });
+
+    $('#bank-select').change(function(){
+        var bank = $(this).val();
+        $('#bank').val(bank);
     });
 }
 
