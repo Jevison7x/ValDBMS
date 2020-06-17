@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,19 @@ public class LGA_DAO
             while(rs.next())
                 lgaList.add(rs.getString(Ward.LGA));
             return lgaList;
+        }
+    }
+
+    public static int getLgasTotalCount() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    {
+        DBConfiguration dbConfig = new DBConfiguration();
+        try(Connection conn = dbConfig.getDatabaseConnection())
+        {
+            String sql = "SELECT DISTINCT " + Ward.LGA + " FROM " + Ward.WARDS;
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            rs.last();
+            return rs.getRow();
         }
     }
 }

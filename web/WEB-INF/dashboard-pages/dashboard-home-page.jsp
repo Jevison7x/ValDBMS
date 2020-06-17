@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                 <!-- MAIN CONTENT-->
                 <div id="dashboard-home" class="main-content">
                     <div class="section__content section__content--p30">
@@ -46,7 +47,7 @@
                                                     <i class="zmdi zmdi-markunread-mailbox"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>25</h2>
+                                                    <h2>${totalLgas}</h2>
                                                     <span>Local Government Areas</span>
                                                 </div>
                                             </div>
@@ -64,7 +65,7 @@
                                                     <i class="zmdi zmdi-calendar-note"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>50</h2>
+                                                    <h2>${totalWards}</h2>
                                                     <span>Wards</span>
                                                 </div>
                                             </div>
@@ -82,7 +83,7 @@
                                                     <i class="zmdi zmdi-account-o"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>5</h2>
+                                                    <h2>${totalUsers}</h2>
                                                     <span>Users</span>
                                                 </div>
                                             </div>
@@ -109,62 +110,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            <c:forEach var="member" items="${chairmanList}">
+                                                <jsp:useBean id="member" class="com.valdbms.members.Member"/>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>CHAIRMAN</td>
-                                                    <td>VICTOR</td>
-                                                    <td>NKIRUKA</td>
-                                                    <td class="text-right">1</td>
-                                                    <td class="text-right">ONITSHA NORTH</td>
+                                                    <td>${member.sn}</td>
+                                                    <td>${member.role}</td>
+                                                    <td>${member.firstName}</td>
+                                                    <td>${member.lastName}</td>
+                                                    <td class="text-right">${member.ward}</td>
+                                                    <td class="text-right">${member.lga}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>CHAIRMAN</td>
-                                                    <td>VICTOR</td>
-                                                    <td>NKIRUKA</td>
-                                                    <td class="text-right">1</td>
-                                                    <td class="text-right">ONITSHA NORTH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>CHAIRMAN</td>
-                                                    <td>VICTOR</td>
-                                                    <td>NKIRUKA</td>
-                                                    <td class="text-right">1</td>
-                                                    <td class="text-right">ONITSHA NORTH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>CHAIRMAN</td>
-                                                    <td>VICTOR</td>
-                                                    <td>NKIRUKA</td>
-                                                    <td class="text-right">1</td>
-                                                    <td class="text-right">ONITSHA NORTH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>CHAIRMAN</td>
-                                                    <td>VICTOR</td>
-                                                    <td>NKIRUKA</td>
-                                                    <td class="text-right">1</td>
-                                                    <td class="text-right">ONITSHA NORTH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>CHAIRMAN</td>
-                                                    <td>VICTOR</td>
-                                                    <td>NKIRUKA</td>
-                                                    <td class="text-right">1</td>
-                                                    <td class="text-right">ONITSHA NORTH</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>CHAIRMAN</td>
-                                                    <td>VICTOR</td>
-                                                    <td>NKIRUKA</td>
-                                                    <td class="text-right">1</td>
-                                                    <td class="text-right">ONITSHA NORTH</td>
-                                                </tr>
+                                            </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>

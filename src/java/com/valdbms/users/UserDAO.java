@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -110,6 +111,21 @@ public class UserDAO
         finally
         {
             em.close();
+        }
+    }
+
+    public static int getUsersTotalCount() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    {
+        DBConfiguration dbConfig = new DBConfiguration();
+        try(Connection conn = dbConfig.getDatabaseConnection())
+        {
+            String sql = "SELECT COUNT(*) FROM " + User.USERS;
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next())
+                return rs.getInt(1);
+            else
+                return 0;
         }
     }
 }

@@ -181,4 +181,20 @@ public class MembersDAO
         }
         return filteredMembers;
     }
+
+    public static List<Member> getChairmanList()
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            String sql = "SELECT * FROM " + Member.MEMBERS + " WHERE " + Member.ROLE + " = 'CHAIRMAN' ";
+            Query q = em.createNativeQuery(sql, Member.class);
+            List<Member> members = q.getResultList();
+            return members;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
 }

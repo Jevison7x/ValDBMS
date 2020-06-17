@@ -11,8 +11,13 @@
  */
 package com.valdbms.dashboard;
 
+import com.valdbms.members.Member;
 import com.valdbms.members.MembersDAO;
+import com.valdbms.users.UserDAO;
+import com.valdbms.wards.LGA_DAO;
+import com.valdbms.wards.WardDAO;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +43,15 @@ public class DashboardHomeServlet extends HttpServlet
         try
         {
             int totalMembers = MembersDAO.getMembersTotalCount();
+            int totalLgas = LGA_DAO.getLgasTotalCount();
+            int totalWards = WardDAO.getWardsTotalCount();
+            int totalUsers = UserDAO.getUsersTotalCount();
+            List<Member> chairmanList = MembersDAO.getChairmanList();
             request.setAttribute("totalMembers", totalMembers);
+            request.setAttribute("totalLgas", totalLgas);
+            request.setAttribute("totalWards", totalWards);
+            request.setAttribute("totalUsers", totalUsers);
+            request.setAttribute("chairmanList", chairmanList);
             request.getRequestDispatcher("home-page").forward(request, response);
         }
         catch(Exception xcp)
