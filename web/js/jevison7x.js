@@ -425,6 +425,8 @@ function initNewMemberSubmitFormEvent()
         var firstName = $('#first-name').val().trim();
         var middleName = $('#middle-name').val().trim();
         var lastName = $('#last-name').val().trim();
+        var gender = $('#gender').val();
+        var dateOfBirth = $('#date-of-birth').val().trim();
         var phoneNumber = $('#phone-number').val().trim();
         var email = $('#email').val().trim();
         var state = $('#state').val().trim();
@@ -438,9 +440,11 @@ function initNewMemberSubmitFormEvent()
         $.ajax({
             url: 'submit-new-member',
             dataType: 'text',
-            data: {title: title, firstName: firstName, middleName: middleName,
-                lastName: lastName, phoneNumber: phoneNumber, email: email,
-                state: state, lga: lga, ward: ward, role: role,
+            data: {
+                title: title, firstName: firstName, middleName: middleName,
+                lastName: lastName, gender: gender, dateOfBirth: dateOfBirth,
+                phoneNumber: phoneNumber, email: email, state: state,
+                lga: lga, ward: ward, role: role,
                 bank: bank, accountNo: accountNo, accountName: accountName
             },
             method: 'POST',

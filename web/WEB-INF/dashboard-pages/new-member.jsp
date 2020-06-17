@@ -114,6 +114,34 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="has-success form-group">
+                                                                <label for="gender" class="form-control-label">Gender: </label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-venus-mars"></i>
+                                                                    </div>
+                                                                    <select id="gender" name="gender" class="form-control" required>
+                                                                        <option value="">Select Gender</option>
+                                                                        <option value="Male">Male</option>
+                                                                        <option value="Female">Female</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="has-success form-group">
+                                                                <label for="date-of-birth" class="form-control-label">Date of Birth: </label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="date" name="dateOfBirth" id="date-of-birth" class="form-control-success form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <hr/>
                                                     <div class="row">
                                                         <div class="col-md-6">

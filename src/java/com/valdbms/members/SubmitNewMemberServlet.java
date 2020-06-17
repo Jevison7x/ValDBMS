@@ -56,6 +56,8 @@ public class SubmitNewMemberServlet extends HttpServlet
         String firstName = request.getParameter("firstName");
         String middleName = request.getParameter("middleName");
         String lastName = request.getParameter("lastName");
+        String gender = request.getParameter("gender");
+        String dateOfBirth = request.getParameter("dateOfBirth");
         String role = request.getParameter("role");
         String state = request.getParameter("state");
         String lga = request.getParameter("lga");

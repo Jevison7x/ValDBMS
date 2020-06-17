@@ -13,6 +13,7 @@ package com.valdbms.members;
 
 import static com.valdbms.members.Member.MEMBERS;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -35,6 +36,8 @@ public class Member implements Serializable
     private String firstName;
     private String middleName;
     private String lastName;
+    private String gender;
+    private Date dateOfBirth;
     private String role;
     private String state;
     private String lga;
@@ -45,6 +48,10 @@ public class Member implements Serializable
     private String email;
     private Timestamp dateAdded;
     private String addedBy;
+
+    //Gender constants
+    public static final String MALE = "Male";
+    public static final String FEMALE = "Female";
 
     public Member()
     {
@@ -210,6 +217,26 @@ public class Member implements Serializable
         this.accountName = accountName;
     }
 
+    public String getGender()
+    {
+        return gender;
+    }
+
+    public void setGender(String gender)
+    {
+        this.gender = gender;
+    }
+
+    public Date getDateOfBirth()
+    {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth)
+    {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public static final String MEMBERS = "members";
     public static final String SN = "sn";
     public static final String MOBILE_NO = "mobileNo";
@@ -217,6 +244,8 @@ public class Member implements Serializable
     public static final String FIRST_NAME = "firstName";
     public static final String MIDDLE_NAME = "middleName";
     public static final String LAST_NAME = "lastName";
+    public static final String GENDER = "gender";
+    public static final String DATE_OF_BIRTH = "dateOfBirth";
     public static final String ROLE = "role";
     public static final String STATE = "state";
     public static final String LGA = "lga";

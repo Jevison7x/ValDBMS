@@ -46,104 +46,106 @@ public class MembersListServlet extends HttpServlet
         {
             if(request.getParameter("json") != null)
                 try(PrintWriter out = response.getWriter())
+            {
+                response.setContentType("application/json");
+                boolean filtering = false;
+                String role = request.getParameter("columns[4][search][value]");
+                String state = request.getParameter("columns[6][search][value]");
+                String lga = request.getParameter("columns[7][search][value]");
+                String ward = request.getParameter("columns[8][search][value]");
+                String bank = request.getParameter("columns[9][search][value]");
+                if(!role.isEmpty())
+                    filtering = true;
+                else if(!state.isEmpty())
+                    filtering = true;
+                else if(!lga.isEmpty())
+                    filtering = true;
+                else if(!ward.isEmpty())
+                    filtering = true;
+                else if(!bank.isEmpty())
+                    filtering = true;
+                int toIndex = Integer.parseInt(request.getParameter("length"));
+                int fromIndex = Integer.parseInt(request.getParameter("start"));
+                int colIndex = Integer.parseInt(request.getParameter("order[0][column]"));
+                String sortColumn = null;
+                switch(colIndex)
                 {
-                    response.setContentType("application/json");
-                    boolean filtering = false;
-                    String role = request.getParameter("columns[4][search][value]");
-                    String state = request.getParameter("columns[6][search][value]");
-                    String lga = request.getParameter("columns[7][search][value]");
-                    String ward = request.getParameter("columns[8][search][value]");
-                    String bank = request.getParameter("columns[9][search][value]");
-                    if(!role.isEmpty())
-                        filtering = true;
-                    else if(!state.isEmpty())
-                        filtering = true;
-                    else if(!lga.isEmpty())
-                        filtering = true;
-                    else if(!ward.isEmpty())
-                        filtering = true;
-                    else if(!bank.isEmpty())
-                        filtering = true;
-                    int length = Integer.parseInt(request.getParameter("length"));
-                    int start = Integer.parseInt(request.getParameter("start"));
-                    int colIndex = Integer.parseInt(request.getParameter("order[0][column]"));
-                    String sortColumn = null;
-                    switch(colIndex)
-                    {
-                        case 0:
-                            sortColumn = Member.SN;
-                            break;
-                        case 1:
-                            sortColumn = Member.TITLE;
-                            break;
-                        case 2:
-                            sortColumn = Member.FIRST_NAME;
-                            break;
-                        case 3:
-                            sortColumn = Member.LAST_NAME;
-                            break;
-                        case 4:
-                            sortColumn = Member.ROLE;
-                            break;
-                        case 5:
-                            sortColumn = Member.MOBILE_NO;
-                            break;
-                        case 6:
-                            sortColumn = Member.STATE;
-                            break;
-                        case 7:
-                            sortColumn = Member.LGA;
-                            break;
-                        case 8:
-                            sortColumn = Member.WARD;
-                            break;
-                        case 9:
-                            sortColumn = Member.BANK;
-                            break;
-                        case 10:
-                            sortColumn = Member.ACCOUNT_NO;
-                            break;
-                        case 11:
-                            sortColumn = Member.ACCOUNT_NAME;
-                            break;
-                        case 12:
-                            sortColumn = Member.EMAIL;
-                            break;
-                        default:
-                            sortColumn = Member.SN;
-                            break;
-                    }
-                    int echo = Integer.parseInt(request.getParameter("draw"));
-                    String sortDirection = request.getParameter("order[0][dir]");
-                    int iTotalRecords = MembersDAO.getMembersTotalCount(); // total number of records (unfiltered)
-                    JsonObject jsonResponse = new JsonObject();
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    if(filtering == true)
-                    {
-                        List<Member> filteredMembers = MembersDAO.filteredMembers(role, state, lga, ward, bank);
-                        if(filteredMembers.size() < 10)
-                            length = filteredMembers.size();
-                        List<Member> filteredMembersSubList = filteredMembers.subList(start, length);
-                        jsonResponse.addProperty("iTotalDisplayRecords", filteredMembers.size());
-                        jsonResponse.add("aaData", gson.toJsonTree(filteredMembersSubList));
-                    }
+                    case 0:
+                        sortColumn = Member.SN;
+                        break;
+                    case 1:
+                        sortColumn = Member.TITLE;
+                        break;
+                    case 2:
+                        sortColumn = Member.FIRST_NAME;
+                        break;
+                    case 3:
+                        sortColumn = Member.LAST_NAME;
+                        break;
+                    case 4:
+                        sortColumn = Member.ROLE;
+                        break;
+                    case 5:
+                        sortColumn = Member.MOBILE_NO;
+                        break;
+                    case 6:
+                        sortColumn = Member.STATE;
+                        break;
+                    case 7:
+                        sortColumn = Member.LGA;
+                        break;
+                    case 8:
+                        sortColumn = Member.WARD;
+                        break;
+                    case 9:
+                        sortColumn = Member.BANK;
+                        break;
+                    case 10:
+                        sortColumn = Member.ACCOUNT_NO;
+                        break;
+                    case 11:
+                        sortColumn = Member.ACCOUNT_NAME;
+                        break;
+                    case 12:
+                        sortColumn = Member.EMAIL;
+                        break;
+                    default:
+                        sortColumn = Member.SN;
+                        break;
+                }
+                int echo = Integer.parseInt(request.getParameter("draw"));
+                String sortDirection = request.getParameter("order[0][dir]");
+                int iTotalRecords = MembersDAO.getMembersTotalCount(); // total number of records (unfiltered)
+                JsonObject jsonResponse = new JsonObject();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                if(filtering == true)
+                {
+                    List<Member> filteredMembers = MembersDAO.filteredMembers(role, state, lga, ward, bank);
+                    if(filteredMembers.size() < 10 || filteredMembers.size() - fromIndex < 10)
+                        toIndex = filteredMembers.size();
                     else
-                    {
-                        String sSearch = StringEscapeUtils.unescapeHtml(request.getParameter("search[value]"));
-                        List<Member> members = MembersDAO.getSearchResults(sSearch, sortColumn, sortDirection, start, length);
-                        int iTotalDisplayRecords = MembersDAO.getSearchTotal(sSearch, sortColumn, sortDirection);
-                        jsonResponse.addProperty("iTotalDisplayRecords", iTotalDisplayRecords);
-                        jsonResponse.addProperty("sSearch", sSearch);
-                        jsonResponse.add("aaData", gson.toJsonTree(members));
-                    }
-                    jsonResponse.addProperty("sEcho", echo);
-                    jsonResponse.addProperty("iTotalRecords", iTotalRecords);
-                    out.print(jsonResponse);
+                        toIndex = fromIndex + toIndex;
+                    List<Member> filteredMembersSubList = filteredMembers.subList(fromIndex, toIndex);
+                    jsonResponse.addProperty("iTotalDisplayRecords", filteredMembers.size());
+                    jsonResponse.add("aaData", gson.toJsonTree(filteredMembersSubList));
                 }
-                catch(Exception xcp)
+                else
                 {
-                    xcp.printStackTrace(System.err);
+                    String sSearch = StringEscapeUtils.unescapeHtml(request.getParameter("search[value]"));
+                    List<Member> members = MembersDAO.getSearchResults(sSearch, sortColumn, sortDirection, fromIndex, toIndex);
+                    int iTotalDisplayRecords = MembersDAO.getSearchTotal(sSearch, sortColumn, sortDirection);
+                    jsonResponse.addProperty("iTotalDisplayRecords", iTotalDisplayRecords);
+                    jsonResponse.addProperty("sSearch", sSearch);
+                    jsonResponse.add("aaData", gson.toJsonTree(members));
                 }
+                jsonResponse.addProperty("sEcho", echo);
+                jsonResponse.addProperty("iTotalRecords", iTotalRecords);
+                out.print(jsonResponse);
+            }
+            catch(Exception xcp)
+            {
+                xcp.printStackTrace(System.err);
+            }
             else
             {
                 List<String> roles = RolesDAO.getDistinctRoles();
