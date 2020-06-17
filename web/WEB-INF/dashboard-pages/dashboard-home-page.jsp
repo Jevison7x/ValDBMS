@@ -28,7 +28,7 @@
                                                     <i class="zmdi zmdi-accounts-list"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>2,500</h2>
+                                                    <h2>${totalMembers}</h2>
                                                     <span>Registered Members</span>
                                                 </div>
                                             </div>

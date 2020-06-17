@@ -11,6 +11,7 @@
  */
 package com.valdbms.dashboard;
 
+import com.valdbms.members.MembersDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +37,8 @@ public class DashboardHomeServlet extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
         try
         {
+            int totalMembers = MembersDAO.getMembersTotalCount();
+            request.setAttribute("totalMembers", totalMembers);
             request.getRequestDispatcher("home-page").forward(request, response);
         }
         catch(Exception xcp)
