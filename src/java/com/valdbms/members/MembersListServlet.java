@@ -18,11 +18,14 @@ import com.valdbms.banks.BankDAO;
 import com.valdbms.roles.RolesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
@@ -120,6 +123,14 @@ public class MembersListServlet extends HttpServlet
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 if(filtering == true)
                 {
+                    Map<String, String> filterParameters = new HashMap<>();
+                    filterParameters.put("role", role);
+                    filterParameters.put("state", state);
+                    filterParameters.put("lga", lga);
+                    filterParameters.put("ward", ward);
+                    filterParameters.put("bank", bank);
+                    HttpSession session = request.getSession(false);
+                    session.setAttribute("filterParameters", filterParameters);
                     List<Member> filteredMembers = MembersDAO.filteredMembers(role, state, lga, ward, bank);
                     if(filteredMembers.size() < 10 || filteredMembers.size() - fromIndex < 10)
                         toIndex = filteredMembers.size();

@@ -38,7 +38,6 @@ public class MembersDAO
             em.getTransaction().begin();
             em.persist(member);
             em.getTransaction().commit();
-            em.flush();
         }
         finally
         {
@@ -191,6 +190,76 @@ public class MembersDAO
             Query q = em.createNativeQuery(sql, Member.class);
             List<Member> members = q.getResultList();
             return members;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
+    public static boolean updateOldPhoneNumber(String oldPhoneNumber, String mobileNo)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+            String sql = "UPDATE " + Member.MEMBERS + " "
+                    + "SET " + Member.MOBILE_NO + " = ? "
+                    + "WHERE " + Member.MOBILE_NO + " = ?";
+            Query q = em.createNativeQuery(sql);
+            q.setParameter(1, mobileNo);
+            q.setParameter(2, oldPhoneNumber);
+            int update = q.executeUpdate();
+            em.getTransaction().commit();
+            if(update == 1)
+                return true;
+            else
+                return false;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
+    public static void updateMember(Member member)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+            Member m = em.find(Member.class, member.getMobileNo());
+            m.setTitle(member.getTitle());
+            m.setFirstName(member.getFirstName());
+            m.setLastName(member.getLastName());
+            m.setMiddleName(member.getMiddleName());
+            m.setAddedBy(member.getAddedBy());
+            m.setEmail(member.getEmail());
+            m.setDateAdded(member.getDateAdded());
+            m.setGender(member.getGender());
+            m.setState(member.getState());
+            m.setLga(member.getLga());
+            m.setWard(member.getWard());
+            m.setRole(member.getRole());
+            m.setBank(member.getBank());
+            m.setAccountNo(member.getAccountNo());
+            m.setAccountName(member.getAccountName());
+            m.setDateOfBirth(member.getDateOfBirth());
+            em.getTransaction().commit();
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
+    public static Member getMember(String phoneNumber)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            Member member = em.find(Member.class, phoneNumber);
+            return member;
         }
         finally
         {

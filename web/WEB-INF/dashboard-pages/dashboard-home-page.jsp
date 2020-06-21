@@ -14,9 +14,9 @@
                                 <div class="col-md-12">
                                     <div class="overview-wrap">
                                         <h2 class="title-1">overview</h2>
-                                        <button class="au-btn au-btn-icon au-btn--blue">
+                                        <a href="new-member" class="au-btn au-btn-icon au-btn--blue ajax-link">
                                             <i class="zmdi zmdi-plus"></i> add new member
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -132,46 +132,12 @@
                                             <div class="table-responsive">
                                                 <table class="table table-top-countries">
                                                     <tbody>
+                                                    <c:forEach var="lga" items="${lgaSet}">
                                                         <tr>
-                                                            <td>Onitsha North</td>
-                                                            <td class="text-right">1,000</td>
+                                                            <td>${lga}</td>
+                                                            <td class="text-right">${lgaWardsMap[lga]}</td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>Awka</td>
-                                                            <td class="text-right">540</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Onitsha South</td>
-                                                            <td class="text-right">980</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Urumba North</td>
-                                                            <td class="text-right">45</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Urumba South</td>
-                                                            <td class="text-right">55</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Idemili</td>
-                                                            <td class="text-right">78</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Aguata</td>
-                                                            <td class="text-right">25</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Ayamelum</td>
-                                                            <td class="text-right">45</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Njikoka</td>
-                                                            <td class="text-right">45</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Oyi</td>
-                                                            <td class="text-right">45</td>
-                                                        </tr>
+                                                    </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>

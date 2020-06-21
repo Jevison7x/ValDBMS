@@ -13,19 +13,16 @@ package com.valdbms.members;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Set;
-import java.util.TreeSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Jevison7x
  */
-public class SelectMembersServlet extends HttpServlet
+public class EditMemberServlet extends HttpServlet
 {
 
     /**
@@ -41,29 +38,10 @@ public class SelectMembersServlet extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter())
         {
-            HttpSession session = request.getSession(false);
-            Set<String> selectedPhoneNumbers = (Set<String>)session.getAttribute("selectedPhoneNumbers");
-            if(selectedPhoneNumbers == null)
-                selectedPhoneNumbers = new TreeSet<>();
-            String status = request.getParameter("status");
-            String selectType = request.getParameter("selectType");
-            if(selectType.equals("single"))
-            {
-                String phoneNumber = request.getParameter("phoneNumber");
-                if(status.equals("select"))
-                    selectedPhoneNumbers.add(phoneNumber);
-                else
-                    selectedPhoneNumbers.remove(phoneNumber);
-                session.setAttribute("selectedPhoneNumbers", selectedPhoneNumbers);
-                for(String phone : selectedPhoneNumbers)
-                    out.println(phone);
-            }
-            else
-                session.removeAttribute("selectedPhoneNumbers");
-        }
-        catch(Exception xcp)
-        {
-            xcp.printStackTrace(System.err);
+            String phoneNumber = request.getParameter("phoneNumber");
+            Member member = MembersDAO.getMember(phoneNumber);
+            request.setAttribute("member", member);
+            request.getRequestDispatcher("edit-member-page").forward(request, response);
         }
     }
 

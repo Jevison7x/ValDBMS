@@ -11,8 +11,11 @@
  */
 package com.valdbms.members;
 
+import com.valdbms.util.HttpClientAcceptSelfSignedCertificate;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.servlet.ServletException;
@@ -25,8 +28,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author Jevison7x
  */
-public class SelectMembersServlet extends HttpServlet
+public class MessageMembersServlet extends HttpServlet
 {
+    private static final String SENDER = "ValOzigbo";
+    private static final String API_KEY = "fHTGT6PiRxIE1ZrMvOTDcsu0cM5yiQKz2EnWAXxQqkMt6UlAUHwHGIBFxQW4";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,31 +44,43 @@ public class SelectMembersServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
-        try(PrintWriter out = response.getWriter())
+        PrintWriter out = response.getWriter();
+        try
         {
             HttpSession session = request.getSession(false);
-            Set<String> selectedPhoneNumbers = (Set<String>)session.getAttribute("selectedPhoneNumbers");
-            if(selectedPhoneNumbers == null)
-                selectedPhoneNumbers = new TreeSet<>();
-            String status = request.getParameter("status");
-            String selectType = request.getParameter("selectType");
-            if(selectType.equals("single"))
-            {
-                String phoneNumber = request.getParameter("phoneNumber");
-                if(status.equals("select"))
-                    selectedPhoneNumbers.add(phoneNumber);
-                else
-                    selectedPhoneNumbers.remove(phoneNumber);
-                session.setAttribute("selectedPhoneNumbers", selectedPhoneNumbers);
-                for(String phone : selectedPhoneNumbers)
-                    out.println(phone);
-            }
+            Set<String> phonenumbers = (Set<String>)session.getAttribute("selectedPhoneNumbers");
+            Map<String, String> filterParameters = (Map<String, String>)session.getAttribute("filterParameters");
+            if(phonenumbers == null)
+                if(filterParameters != null)
+                {
+                    String role = filterParameters.get("role");
+                    String state = filterParameters.get("state");
+                    String lga = filterParameters.get("lga");
+                    String ward = filterParameters.get("ward");
+                    String bank = filterParameters.get("bank");
+                    List<Member> filteredMembers = MembersDAO.filteredMembers(role, state, lga, ward, bank);
+                    phonenumbers = new TreeSet<>();
+                    for(Member member : filteredMembers)
+                        phonenumbers.add(member.getMobileNo());
+                }
+            String smsMessage = request.getParameter("message");
+            if(phonenumbers != null)
+                for(String phoneNumber : phonenumbers)
+                {
+                    HttpClientAcceptSelfSignedCertificate.bulkSmsApiConnection(API_KEY, SENDER, phoneNumber, smsMessage);
+                    out.print(phoneNumber + ", ");
+                }
             else
-                session.removeAttribute("selectedPhoneNumbers");
+                out.print("empty phone numbers");
         }
         catch(Exception xcp)
         {
+            xcp.printStackTrace(out);
             xcp.printStackTrace(System.err);
+        }
+        finally
+        {
+            out.close();
         }
     }
 

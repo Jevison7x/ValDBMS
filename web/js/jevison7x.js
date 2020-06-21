@@ -40,6 +40,13 @@ var paceObject = {
             pageInit: function(){
                 initPinNumbersPage();
             }
+        },
+        {
+            pageId: 'edit-member',
+            pageInit: function(){
+                initFormActions();
+                initEditMemberSubmitFormEvent();
+            }
         }
     ],
     e404: '404',
@@ -247,6 +254,14 @@ function initMembersPage(){
 
     $('#select-all-btn').click(function(){
         $('#members-table tbody tr').toggleClass('selected');
+        $(this).toggleClass('selected');
+        var status = $(this).hasClass('selected') ? 'select' : 'unselect';
+        $.ajax({
+            url: 'select-member',
+            data: {status: status, selectType: 'all'},
+            dataType: 'text/html',
+            method: 'GET'
+        });
     });
 
     $('#message-launch').click(function(){
@@ -259,16 +274,56 @@ function initMembersPage(){
 
     $('#send-message').click(function(){
         var message = $('#textarea-input').val();
-        var phoneNumbers = '';
         var count = $membersTable.rows({selected: true}).count();
+        var $sendBtn = $(this);
+        var $icon = $sendBtn.find('i');
         console.log('selected rows: ', count);
-        /*
-         var selectedRows = $('#members-table').DataTable().row('.selected');
-         for(var i = 0; i < selectedRows.length; i++){
-         var row = selectedRows[i];
-         console.log('Row: ', row);
-         }
-         */
+        $.ajax({
+            url: 'message-members',
+            data: {message: message},
+            beforeSend: function(xhr){
+                $icon.removeClass('fa-envelope').addClass('fa-refresh').addClass('fa-spin');
+            },
+            success: function(data, textStatus, jqXHR){
+
+            },
+            complete: function(jqXHR, textStatus){
+                $icon.removeClass('fa-spin').removeClass('fa-refresh').addClass('fa-envelope');
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('There was an error, please reload this page.');
+            }
+        });
+    });
+
+    $('#edit-record').click(function(){
+        var $selectedRow = $('#members-table tbody').find('tr.selected');
+        var phoneNumber = $selectedRow.find('td.phone-number').html();
+        console.log('Selected Phone Number: ', phoneNumber);
+        ajaxPageLoad('edit-member', 'Val DBMS', paceObject, {phoneNumber: phoneNumber});
+    });
+
+    $('#delete-record').click(function(){
+        var $selectedRow = $('#members-table tbody').find('tr.selected');
+        var phoneNumber = $selectedRow.find('td.phone-number').html();
+        var $deleteBtn = $(this);
+        var $icon = $deleteBtn.find('i');
+        $.ajax({
+            url: 'delete-record',
+            data: {phoneNumber: phoneNumber},
+            beforeSend: function(xhr){
+                $icon.removeClass('fa-times').addClass('fa-refresh').addClass('fa-spin');
+            },
+            success: function(data, textStatus, jqXHR){
+
+            },
+            complete: function(jqXHR, textStatus){
+                $icon.removeClass('fa-spin').removeClass('fa-refresh').addClass('fa-times');
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+
+            }
+        });
     });
 }
 
@@ -456,7 +511,57 @@ function initNewMemberSubmitFormEvent()
             },
             success: function(data, textStatus, jqXHR){
                 if(data === 'success')
-                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject);
+                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject, {a: 1});
+                else
+                    $('.card-header').html('<strong><i class="fas fa-warning"></i> ' + data + '</strong>').addClass('error-in-form');
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                $('.card-header').html('<strong><i class="fas fa-warning"></i> An unknown error occured, please refresh this page.</strong>').addClass('error-in-form');
+            }
+        });
+    });
+}
+
+function initEditMemberSubmitFormEvent()
+{
+    $('#edit-member-form').submit(function(event){
+        event.preventDefault();
+        var title = $('#title').val();
+        var firstName = $('#first-name').val().trim();
+        var middleName = $('#middle-name').val().trim();
+        var lastName = $('#last-name').val().trim();
+        var gender = $('#gender').val();
+        var dateOfBirth = $('#date-of-birth').val().trim();
+        var phoneNumber = $('#phone-number').val().trim();
+        var email = $('#email').val().trim();
+        var state = $('#state').val().trim();
+        var lga = $('#lga').val().trim();
+        var ward = $('#ward').val().trim();
+        var role = $('#role').val().trim();
+        var bank = $('#bank').val().trim();
+        var accountNo = $('#account-no').val().trim();
+        var accountName = $('#account-name').val().trim();
+        var oldPhoneNumber = $('#old-phone-number').val();
+        $.ajax({
+            url: 'save-edit-member',
+            dataType: 'text',
+            data: {
+                title: title, firstName: firstName, middleName: middleName,
+                lastName: lastName, gender: gender, dateOfBirth: dateOfBirth,
+                phoneNumber: phoneNumber, email: email, state: state,
+                lga: lga, ward: ward, role: role, oldPhoneNumber: oldPhoneNumber,
+                bank: bank, accountNo: accountNo, accountName: accountName
+            },
+            method: 'POST',
+            beforeSend: function(xhr){
+                loadProgress();
+            },
+            complete: function(jqXHR, textStatus){
+                hideProgress();
+            },
+            success: function(data, textStatus, jqXHR){
+                if(data === 'success')
+                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject, {a: 2});
                 else
                     $('.card-header').html('<strong><i class="fas fa-warning"></i> ' + data + '</strong>').addClass('error-in-form');
             },

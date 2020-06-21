@@ -63,9 +63,10 @@ $.fn.extend({
     }
 });
 
-function ajaxPageLoad(urlPath, pageTitle, pace){
+function ajaxPageLoad(urlPath, pageTitle, pace, params){
     $.ajax({
         url: urlPath,
+        data: params,
         beforeSend: function(xhr){
             pace.beforeSend();
         },

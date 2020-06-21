@@ -33,10 +33,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Ugimson
- * @since May 31, 2020 10:24:08 PM
+ * @author Jevison7x
  */
-public class SubmitNewMemberServlet extends HttpServlet
+public class SaveEditMemberServlet extends HttpServlet
 {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -68,6 +67,7 @@ public class SubmitNewMemberServlet extends HttpServlet
         String accountName = request.getParameter("accountName");
         String email = request.getParameter("email");
         String addedBy = user.getUserName();
+        String oldPhoneNumber = request.getParameter("oldPhoneNumber");
         try
         {
             Ward wardObj = WardDAO.getWard(state, lga, ward);
@@ -103,6 +103,9 @@ public class SubmitNewMemberServlet extends HttpServlet
             else
                 dateOfBirth = Date.valueOf($dateOfBirth);
 
+            if(!mobileNo.equals(oldPhoneNumber))
+                MembersDAO.updateOldPhoneNumber(oldPhoneNumber, mobileNo);
+
             Member member = new Member();
             member.setTitle(title);
             member.setMobileNo(mobileNo);
@@ -121,7 +124,7 @@ public class SubmitNewMemberServlet extends HttpServlet
             member.setAddedBy(addedBy);
             member.setDateOfBirth(dateOfBirth);
             member.setGender(gender);
-            MembersDAO.createNewMember(member);
+            MembersDAO.updateMember(member);
             out.print("success");
         }
         catch(Exception xcp)
@@ -129,7 +132,10 @@ public class SubmitNewMemberServlet extends HttpServlet
             if(xcp instanceof EntityExistsException || ExceptionUtil.isCause(MySQLIntegrityConstraintViolationException.class, xcp))
                 out.print("The phone number " + mobileNo + " already exists.");
             else
+            {
                 out.print(xcp.getMessage());
+                xcp.printStackTrace(System.err);
+            }
         }
         finally
         {

@@ -19,7 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -55,5 +57,24 @@ public class LGA_DAO
             rs.last();
             return rs.getRow();
         }
+    }
+
+    public static Map<String, Integer> getLGAWardsMap()
+    {
+        List<Ward> allWards = WardDAO.getAllWards();
+        Map<String, Integer> lgaWardsMap = new HashMap<>();
+        for(Ward ward : allWards)
+        {
+            String lga = ward.getLga();
+            if(lgaWardsMap.containsKey(lga))
+            {
+                int noOfWards = lgaWardsMap.get(lga);
+                noOfWards++;
+                lgaWardsMap.put(lga, noOfWards);
+            }
+            else
+                lgaWardsMap.put(lga, 1);
+        }
+        return lgaWardsMap;
     }
 }

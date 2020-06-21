@@ -27,6 +27,9 @@
                 </style>
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
+                        <c:if test="${param.a ne null and param.a eq 1}">
+                            <h3>A new member was added successfully!</h3>
+                        </c:if>
                         <form id="member-form-filter">
                             <div class="row form-group j-form-group">
                                 <div class="col-md-12">
@@ -156,6 +159,14 @@
                                     <button type="button" id="message-launch" class="btn btn-dark btn-sm">
                                         <i class="fa fa-envelope"></i> Message Selected
                                     </button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" id="edit-record" class="btn btn-warning btn-sm">
+                                        <i class="fa fa-adjust"></i> Edit Record
+                                    </button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" id="delete-record" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-times"></i> Delete Record
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -191,30 +202,30 @@
                     </div>
                 </div>
 
-                    <!-- Modal -->
-                    <div id="message-modal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title"><i class="fa fa-users"></i> Message Selected Members via SMS</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <button id="personalized-message" type="button" class="btn btn-outline-primary">
-                                        <i class="fa fa-user-plus"></i> Personalized Message
-                                    </button>
-                                    <textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Content..." class="form-control"></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button id="send-message" type="button" class="btn btn-success pull-left">
-                                        <i class="fa fa-envelope"></i> Send
-                                    </button>
-                                    <button type="button" class="btn btn-warning pull-right" data-dismiss="modal">
-                                        <i class="fa fa-times"></i> Close
-                                    </button>
-                                </div>
+                <!-- Modal -->
+                <div id="message-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"><i class="fa fa-users"></i> Message Selected Members via SMS</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <button id="personalized-message" type="button" class="btn btn-outline-primary">
+                                    <i class="fa fa-user-plus"></i> Personalized Message
+                                </button>
+                                <textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Content..." class="form-control"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="send-message" type="button" class="btn btn-success pull-left">
+                                    <i class="fa fa-envelope"></i> Send
+                                </button>
+                                <button type="button" class="btn btn-warning pull-right" data-dismiss="modal">
+                                    <i class="fa fa-times"></i> Close
+                                </button>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>

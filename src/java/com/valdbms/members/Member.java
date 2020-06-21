@@ -237,6 +237,12 @@ public class Member implements Serializable
         this.dateOfBirth = dateOfBirth;
     }
 
+    @Override
+    public String toString()
+    {
+        return firstName + " " + lastName + " (" + email + ")";
+    }
+
     public static final String MEMBERS = "members";
     public static final String SN = "sn";
     public static final String MOBILE_NO = "mobileNo";

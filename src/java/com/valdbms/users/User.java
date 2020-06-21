@@ -78,6 +78,12 @@ public class User implements Serializable
         this.dateCreated = dateCreated;
     }
 
+    @Override
+    public String toString()
+    {
+        return userName + " (" + email + ")";
+    }
+
     public static final String USERS = "users";
     public static final String USER_NAME = "userName";
     public static final String EMAIL = "email";

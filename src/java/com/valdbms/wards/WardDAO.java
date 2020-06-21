@@ -102,4 +102,20 @@ public class WardDAO
                 return 0;
         }
     }
+
+    public static List<Ward> getAllWards()
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            String sql = "SELECT * FROM " + Ward.WARDS;
+            Query q = em.createNativeQuery(sql, Ward.class);
+            List<Ward> allWards = q.getResultList();
+            return allWards;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
 }

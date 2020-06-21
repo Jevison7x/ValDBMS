@@ -18,6 +18,8 @@ import com.valdbms.wards.LGA_DAO;
 import com.valdbms.wards.WardDAO;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,11 +49,15 @@ public class DashboardHomeServlet extends HttpServlet
             int totalWards = WardDAO.getWardsTotalCount();
             int totalUsers = UserDAO.getUsersTotalCount();
             List<Member> chairmanList = MembersDAO.getChairmanList();
+            Map<String, Integer> lgaWardsMap = LGA_DAO.getLGAWardsMap();
+            Set<String> lgaSet = lgaWardsMap.keySet();
             request.setAttribute("totalMembers", totalMembers);
             request.setAttribute("totalLgas", totalLgas);
             request.setAttribute("totalWards", totalWards);
             request.setAttribute("totalUsers", totalUsers);
             request.setAttribute("chairmanList", chairmanList);
+            request.setAttribute("lgaWardsMap", lgaWardsMap);
+            request.setAttribute("lgaSet", lgaSet);
             request.getRequestDispatcher("home-page").forward(request, response);
         }
         catch(Exception xcp)

@@ -102,6 +102,22 @@
         <servlet-name>Select Members Servlet</servlet-name>
         <servlet-class>com.valdbms.members.SelectMembersServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Message Members Servlet</servlet-name>
+        <servlet-class>com.valdbms.members.MessageMembersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Edit Member Servlet</servlet-name>
+        <servlet-class>com.valdbms.members.EditMemberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Edit Member Page (JSP)</servlet-name>
+        <jsp-file>/WEB-INF/dashboard-pages/edit-member-page.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Save Edit Member Servlet</servlet-name>
+        <servlet-class>com.valdbms.members.SaveEditMemberServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login Servlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -173,6 +189,22 @@
     <servlet-mapping>
         <servlet-name>Select Members Servlet</servlet-name>
         <url-pattern>/dashboard/select-member</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Message Members Servlet</servlet-name>
+        <url-pattern>/dashboard/message-members</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Edit Member Servlet</servlet-name>
+        <url-pattern>/dashboard/edit-member</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Edit Member Page (JSP)</servlet-name>
+        <url-pattern>/dashboard/edit-member-page</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Save Edit Member Servlet</servlet-name>
+        <url-pattern>/dashboard/save-edit-member</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
