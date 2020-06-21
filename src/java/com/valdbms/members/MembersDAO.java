@@ -266,4 +266,20 @@ public class MembersDAO
             em.close();
         }
     }
+
+    public static void delete(String phoneNumber)
+    {
+        EntityManager em = DBConfiguration.getEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+            Member member = em.find(Member.class, phoneNumber);
+            em.remove(member);
+            em.getTransaction().commit();
+        }
+        finally
+        {
+            em.close();
+        }
+    }
 }

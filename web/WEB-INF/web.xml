@@ -118,6 +118,10 @@
         <servlet-name>Save Edit Member Servlet</servlet-name>
         <servlet-class>com.valdbms.members.SaveEditMemberServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Delete Members Servlet</servlet-name>
+        <servlet-class>com.valdbms.members.DeleteMembersServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login Servlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -205,6 +209,10 @@
     <servlet-mapping>
         <servlet-name>Save Edit Member Servlet</servlet-name>
         <url-pattern>/dashboard/save-edit-member</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Delete Members Servlet</servlet-name>
+        <url-pattern>/dashboard/delete-record</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

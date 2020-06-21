@@ -281,6 +281,7 @@ function initMembersPage(){
         $.ajax({
             url: 'message-members',
             data: {message: message},
+            dataType: 'text/html',
             beforeSend: function(xhr){
                 $icon.removeClass('fa-envelope').addClass('fa-refresh').addClass('fa-spin');
             },
@@ -315,7 +316,8 @@ function initMembersPage(){
                 $icon.removeClass('fa-times').addClass('fa-refresh').addClass('fa-spin');
             },
             success: function(data, textStatus, jqXHR){
-
+                if(data === 'success')
+                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject, {a: 1});
             },
             complete: function(jqXHR, textStatus){
                 $icon.removeClass('fa-spin').removeClass('fa-refresh').addClass('fa-times');
