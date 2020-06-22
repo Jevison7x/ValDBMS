@@ -272,6 +272,10 @@ function initMembersPage(){
         $('#textarea-input').val('Dear ${firstName} ${lastName} ');
     });
 
+    $('#send-money').click(function(){
+        $('#send-money-modal').modal('show');
+    });
+
     $('#send-message').click(function(){
         var message = $('#textarea-input').val();
         var count = $membersTable.rows({selected: true}).count();
@@ -281,12 +285,13 @@ function initMembersPage(){
         $.ajax({
             url: 'message-members',
             data: {message: message},
-            dataType: 'text/html',
+            dataType: 'text',
             beforeSend: function(xhr){
                 $icon.removeClass('fa-envelope').addClass('fa-refresh').addClass('fa-spin');
             },
             success: function(data, textStatus, jqXHR){
-
+                $('#message-modal').modal('hide');
+                alert('Your message was sent successfully!');
             },
             complete: function(jqXHR, textStatus){
                 $icon.removeClass('fa-spin').removeClass('fa-refresh').addClass('fa-envelope');

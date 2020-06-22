@@ -63,10 +63,19 @@ public class MessageMembersServlet extends HttpServlet
                     for(Member member : filteredMembers)
                         phonenumbers.add(member.getMobileNo());
                 }
-            String smsMessage = request.getParameter("message");
+            String originalMessage = request.getParameter("message");
             if(phonenumbers != null)
                 for(String phoneNumber : phonenumbers)
                 {
+                    String smsMessage = originalMessage;
+                    if(originalMessage.contains("${firstName}") || originalMessage.contains("${lastName}"))
+                    {
+                        Member member = MembersDAO.getMember(phoneNumber);
+                        String firstName = member.getFirstName();
+                        String lastName = member.getLastName();
+                        smsMessage = smsMessage.replace("${firstName}", firstName);
+                        smsMessage = smsMessage.replace("${lastName}", lastName);
+                    }
                     HttpClientAcceptSelfSignedCertificate.bulkSmsApiConnection(API_KEY, SENDER, phoneNumber, smsMessage);
                     out.print(phoneNumber + ", ");
                 }

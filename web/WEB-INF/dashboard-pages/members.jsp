@@ -156,16 +156,20 @@
                                         <i class="fa fa-check"></i> Select All
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button type="button" id="message-launch" class="btn btn-dark btn-sm">
-                                        <i class="fa fa-envelope"></i> Message Selected
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <button type="button" id="edit-record" class="btn btn-warning btn-sm">
                                         <i class="fa fa-adjust"></i> Edit Record
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <button type="button" id="delete-record" class="btn btn-danger btn-sm">
                                         <i class="fa fa-times"></i> Delete Record
+                                    </button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" id="message-launch" class="btn btn-dark btn-sm">
+                                        <i class="fa fa-envelope"></i> Message Selected
+                                    </button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" id="send-money" class="btn btn-success btn-sm">
+                                        <i class="fa fa-briefcase"></i> Transfer Money
                                     </button>
                                 </div>
                             </div>
@@ -219,6 +223,29 @@
                             </div>
                             <div class="modal-footer">
                                 <button id="send-message" type="button" class="btn btn-success pull-left">
+                                    <i class="fa fa-envelope"></i> Send
+                                </button>
+                                <button type="button" class="btn btn-warning pull-right" data-dismiss="modal">
+                                    <i class="fa fa-times"></i> Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div id="send-money-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"><i class="fa fa-briefcase"></i> Transfer Money to Selected Members</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="number" name="amount" id="sending-amount" placeholder="Enter the amount here."/>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="send-money-submit" type="button" class="btn btn-success pull-left">
                                     <i class="fa fa-envelope"></i> Send
                                 </button>
                                 <button type="button" class="btn btn-warning pull-right" data-dismiss="modal">
