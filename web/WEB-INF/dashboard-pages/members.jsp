@@ -148,29 +148,33 @@
                             </div>
                             <div class="row form-group j-form-group">
                                 <div class="col-md-12">
-                                    <button type="button" id="filter-btn" class="btn btn-primary btn-sm">
+                                    <button type="button" id="filter-btn" class="btn btn-primary btn-sm sort-btns">
                                         <i class="fa fa-filter"></i> Filter
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button type="button" id="select-all-btn" class="btn btn-info btn-sm">
+                                    <button type="button" id="select-all-btn" class="btn btn-info btn-sm sort-btns">
                                         <i class="fa fa-check"></i> Select All
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button type="button" id="edit-record" class="btn btn-warning btn-sm">
+                                    <button type="button" id="edit-record" class="btn btn-warning btn-sm sort-btns">
                                         <i class="fa fa-adjust"></i> Edit Record
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button type="button" id="delete-record" class="btn btn-danger btn-sm">
+                                    <button type="button" id="delete-record" class="btn btn-danger btn-sm sort-btns">
                                         <i class="fa fa-times"></i> Delete Record
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button type="button" id="message-launch" class="btn btn-dark btn-sm">
+                                    <button type="button" id="message-launch" class="btn btn-dark btn-sm sort-btns">
                                         <i class="fa fa-envelope"></i> Message Selected
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button type="button" id="send-money" class="btn btn-success btn-sm">
+                                    <button type="button" id="send-money" class="btn btn-success btn-sm sort-btns">
                                         <i class="fa fa-briefcase"></i> Transfer Money
                                     </button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="print-selected-members" id="print-selected" class="btn btn-secondary btn-sm sort-btns">
+                                        <i class="fa fa-print"></i> Print Filtered 
+                                    </a>
                                 </div>
                             </div>
                         </form>

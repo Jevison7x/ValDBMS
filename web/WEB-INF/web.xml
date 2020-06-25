@@ -122,6 +122,10 @@
         <servlet-name>Delete Members Servlet</servlet-name>
         <servlet-class>com.valdbms.members.DeleteMembersServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Print Select Servlet</servlet-name>
+        <servlet-class>com.valdbms.members.PrintSelectServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login Servlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -213,6 +217,10 @@
     <servlet-mapping>
         <servlet-name>Delete Members Servlet</servlet-name>
         <url-pattern>/dashboard/delete-record</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Print Select Servlet</servlet-name>
+        <url-pattern>/print-selected-members</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
