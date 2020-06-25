@@ -53,7 +53,7 @@ public class PrintSelectServlet extends HttpServlet
                 String bank = filterParameters.get("bank");
                 List<Member> filteredMembers = MembersDAO.filteredMembers(role, state, lga, ward, bank);
                 request.setAttribute("filteredMembers", filteredMembers);
-                request.getRequestDispatcher("print-page").forward(request, response);
+                request.getRequestDispatcher("print-page-jsp").forward(request, response);
             }
         }
         catch(Exception xcp)
