@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:useBean id="member" class="com.valdbms.members.Member"/>
+<jsp:useBean id="filteredMember" class="com.valdbms.members.Member"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,23 +33,23 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="filteredMember" items="${filteredMembers}">
-                 <tr>
-                    <td>${sn}</td>
-                    <td>${title}</td>
-                    <td>${firstName}</td>
-                    <td>${lastName}</td>
-                    <td>${role}</td>
-                    <td>${mobileNo}</td>
-                    <td>${state}</td>
-                    <td>${lga}</td>
-                    <td>${ward}</td>
-                    <td>${bank}</td>
-                    <td>${accountNo}</td>
-                    <td>${accountName}</td>
-                    <td>${email}</td>
+            <c:forEach var="filteredMember" items="${filteredMembers}">
+                <tr>
+                    <td>${filteredMember.sn}</td>
+                    <td>${filteredMember.title}</td>
+                    <td>${filteredMember.firstName}</td>
+                    <td>${filteredMember.lastName}</td>
+                    <td>${filteredMember.role}</td>
+                    <td>${filteredMember.mobileNo}</td>
+                    <td>${filteredMember.state}</td>
+                    <td>${filteredMember.lga}</td>
+                    <td>${filteredMember.ward}</td>
+                    <td>${filteredMember.bank}</td>
+                    <td>${filteredMember.accountNo}</td>
+                    <td>${filteredMember.accountName}</td>
+                    <td>${filteredMember.email}</td>
                 </tr>
-                </c:forEach>
+            </c:forEach>
             </tbody>
         </table>
     </body>
