@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Val DBMS Print Page</title>
     </head>
     <body>
@@ -33,21 +33,21 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="member" items="${members}">
-                <tr>
-                    <td>${member.sn}</td>
-                    <td>${member.title}</td>
-                    <td>${member.firstName}</td>
-                    <td>${member.lastName}</td>
-                    <td>${member.role}</td>
-                    <td>${member.mobileNo}</td>
-                    <td>${member.state}</td>
-                    <td>${member.lga}</td>
-                    <td>${member.ward}</td>
-                    <td>${member.bank}</td>
-                    <td>${member.accountNo}</td>
-                    <td>${member.accountName}</td>
-                    <td>${member.email}</td>
+                <c:forEach var="filteredMember" items="${filteredMembers}">
+                 <tr>
+                    <td>${sn}</td>
+                    <td>${title}</td>
+                    <td>${firstName}</td>
+                    <td>${lastName}</td>
+                    <td>${role}</td>
+                    <td>${mobileNo}</td>
+                    <td>${state}</td>
+                    <td>${lga}</td>
+                    <td>${ward}</td>
+                    <td>${bank}</td>
+                    <td>${accountNo}</td>
+                    <td>${accountName}</td>
+                    <td>${email}</td>
                 </tr>
                 </c:forEach>
             </tbody>

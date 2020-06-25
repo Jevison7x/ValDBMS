@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,20 +43,18 @@ public class PrintSelectServlet extends HttpServlet
         try
         {
             HttpSession session = request.getSession(false);
-            Set<String> phonenumbers = (Set<String>)session.getAttribute("selectedPhoneNumbers");
             Map<String, String> filterParameters = (Map<String, String>)session.getAttribute("filterParameters");
-            if(phonenumbers == null)
-                if(filterParameters != null)
-                {
-                    String role = filterParameters.get("role");
-                    String state = filterParameters.get("state");
-                    String lga = filterParameters.get("lga");
-                    String ward = filterParameters.get("ward");
-                    String bank = filterParameters.get("bank");
-                    List<Member> filteredMembers = MembersDAO.filteredMembers(role, state, lga, ward, bank);
-                    request.setAttribute("filteredMembers", filteredMembers);
-                    request.getRequestDispatcher("print-page").forward(request, response);
-                }
+            if(filterParameters != null)
+            {
+                String role = filterParameters.get("role");
+                String state = filterParameters.get("state");
+                String lga = filterParameters.get("lga");
+                String ward = filterParameters.get("ward");
+                String bank = filterParameters.get("bank");
+                List<Member> filteredMembers = MembersDAO.filteredMembers(role, state, lga, ward, bank);
+                request.setAttribute("filteredMembers", filteredMembers);
+                request.getRequestDispatcher("print-page").forward(request, response);
+            }
         }
         catch(Exception xcp)
         {

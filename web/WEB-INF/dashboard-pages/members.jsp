@@ -172,8 +172,8 @@
                                         <i class="fa fa-briefcase"></i> Transfer Money
                                     </button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="print-selected-members" id="print-selected" class="btn btn-secondary btn-sm sort-btns">
-                                        <i class="fa fa-print"></i> Print Filtered 
+                                    <a href="../print-page" id="print-selected" class="btn btn-secondary btn-sm sort-btns">
+                                        <i class="fa fa-print"></i> Print Filtered
                                     </a>
                                 </div>
                             </div>

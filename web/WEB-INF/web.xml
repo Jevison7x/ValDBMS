@@ -123,6 +123,7 @@
         <servlet-class>com.valdbms.members.DeleteMembersServlet</servlet-class>
     </servlet>
     <servlet>
+        <description> </description>
         <servlet-name>Print Select Servlet</servlet-name>
         <servlet-class>com.valdbms.members.PrintSelectServlet</servlet-class>
     </servlet>
@@ -220,7 +221,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Print Select Servlet</servlet-name>
-        <url-pattern>/print-selected-members</url-pattern>
+        <url-pattern>/print-page</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
