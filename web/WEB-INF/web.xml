@@ -128,7 +128,6 @@
         <servlet-class>com.valdbms.members.PrintSelectServlet</servlet-class>
     </servlet>
     <servlet>
-        <description>khkinki</description>
         <servlet-name>Print Page (JSP)</servlet-name>
         <jsp-file>/print-page.jsp</jsp-file>
     </servlet>

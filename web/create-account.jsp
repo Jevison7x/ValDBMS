@@ -93,7 +93,7 @@
             </div>
             <!-- footer -->
             <div class="footer">
-                <p>&copy; 2019 Business login form. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="blank">W3layouts</a></p>
+                <p>&copy; 2020 ValDBMS</p>
             </div>
             <!-- footer -->
         </div>
