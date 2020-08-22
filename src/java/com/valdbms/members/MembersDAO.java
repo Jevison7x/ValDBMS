@@ -12,6 +12,7 @@
 package com.valdbms.members;
 
 import com.valdbms.database.DBConfiguration;
+import com.valdbms.util.XyneexURL;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -281,5 +282,32 @@ public class MembersDAO
         {
             em.close();
         }
+    }
+
+    public static String loginSMSLive247(String url, String subAccount, String subAccountEmail, String password) throws IOException
+    {
+        XyneexURL xyneexURL = new XyneexURL(url);
+        xyneexURL.addParameter("cmd", "login");
+        xyneexURL.addParameter("owneremail", subAccountEmail);
+        xyneexURL.addParameter("subacct", subAccount);
+        xyneexURL.addParameter("subacctpwd", password);
+        xyneexURL.setGetRequest();
+        String response = xyneexURL.getResponse();
+        System.out.println(response);
+        return response;
+    }
+
+    public static void sendSMSLive247(String url, String sessionId, String message, String sender, String sendTo) throws IOException
+    {
+        XyneexURL xyneexURL = new XyneexURL(url);
+        xyneexURL.addParameter("cmd", "sendmsg");
+        xyneexURL.addParameter("sessionid", sessionId);
+        xyneexURL.addParameter("message", message);
+        xyneexURL.addParameter("sender", sender);
+        xyneexURL.addParameter("sendto", sendTo);
+        xyneexURL.addParameter("msgtype", "0");
+        xyneexURL.setGetRequest();
+        String response = xyneexURL.getResponse();
+        System.out.println(response);
     }
 }
