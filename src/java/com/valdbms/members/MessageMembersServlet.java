@@ -84,7 +84,9 @@ public class MessageMembersServlet extends HttpServlet
                         smsMessage = smsMessage.replace("${lastName}", lastName);
                     }
                     //HttpClientAcceptSelfSignedCertificate.bulkSmsApiConnection(API_KEY, SENDER, phoneNumber, smsMessage);
-                    MembersDAO.sendSMSLive247(SMS_URL, msgId, smsMessage, SENDER, phoneNumber);
+                    //MembersDAO.sendSMSLive247(SMS_URL, msgId, smsMessage, SENDER, phoneNumber);
+                    String smsResponse = MembersDAO.sendSmartSMSSolutions(smsMessage, SENDER, phoneNumber);
+                    System.out.println("SMS Response: " + smsResponse);
                     out.print(phoneNumber + ", ");
                 }
             }

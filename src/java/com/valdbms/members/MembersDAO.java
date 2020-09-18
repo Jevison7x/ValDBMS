@@ -14,6 +14,8 @@ package com.valdbms.members;
 import com.valdbms.database.DBConfiguration;
 import com.valdbms.util.XyneexURL;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -309,5 +311,19 @@ public class MembersDAO
         xyneexURL.setGetRequest();
         String response = xyneexURL.getResponse();
         System.out.println(response);
+    }
+
+    public static String sendSmartSMSSolutions(String message, String sender, String sendTo) throws IOException, NoSuchAlgorithmException, KeyManagementException
+    {
+        XyneexURL xyneexURL = new XyneexURL("https://smartsmssolutions.com/api/json.php");
+        xyneexURL.addParameter("message", message);
+        xyneexURL.addParameter("to", sendTo);
+        xyneexURL.addParameter("sender", sender);
+        xyneexURL.addParameter("type", "0");
+        xyneexURL.addParameter("routing", "6");
+        xyneexURL.addParameter("token", "YlPuhkIKOe8zhIsdzWwGbloHi8IhX2ZgUgI7gdh1hFLFT8ILf0RmRHRB0p2OKtL0lnRt8fBQC2wMuJ7oVJuCXLFeBxwIcWjybwOj");
+        xyneexURL.setHTTPSGetRequest();
+        String response = xyneexURL.getHTTPSResponse();
+        return response;
     }
 }

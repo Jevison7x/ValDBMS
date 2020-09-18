@@ -17,10 +17,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -37,7 +49,9 @@ public class XyneexURL
 
     private HashMap<String, String> propertiesMap;
 
-    private HttpURLConnection connection;
+    private HttpURLConnection httpURLConnection;
+
+    private HttpsURLConnection httpsURLConnection;
 
     private String xml;
 
@@ -60,7 +74,7 @@ public class XyneexURL
 
     public void addParameter(String name, String value)
     {
-        if(this.connection == null)
+        if(this.httpURLConnection == null)
             this.parametersMap.put(name, value);
         else
             throw new UnsupportedOperationException("The connection is already open.");
@@ -78,7 +92,7 @@ public class XyneexURL
 
     public void addProperty(String name, String value)
     {
-        if(this.connection == null)
+        if(this.httpURLConnection == null)
             this.propertiesMap.put(name, value);
         else
             throw new UnsupportedOperationException("The connection is already open.");
@@ -102,17 +116,17 @@ public class XyneexURL
             }
         }
         this.url = new URL(address);
-        this.connection = (HttpURLConnection)this.url.openConnection();
+        this.httpURLConnection = (HttpURLConnection)this.url.openConnection();
         //this.setRequestProperties();
-        this.connection.setRequestMethod(GET);
+        this.httpURLConnection.setRequestMethod(GET);
     }
 
     public void setPostRequest() throws IOException
     {
         this.url = new URL(address);
-        this.connection = (HttpURLConnection)this.url.openConnection();
+        this.httpURLConnection = (HttpURLConnection)this.url.openConnection();
         //this.setRequestProperties();
-        this.connection.setRequestMethod(POST);
+        this.httpURLConnection.setRequestMethod(POST);
         Set<Map.Entry<String, String>> parameters = this.parametersMap.entrySet();
         if(!parameters.isEmpty())
         {
@@ -127,11 +141,11 @@ public class XyneexURL
                 if(iterator.hasNext())
                     paramsStr += "&";
             }
-            this.connection.setDoOutput(true);
+            this.httpURLConnection.setDoOutput(true);
             DataOutputStream dos = null;
             try
             {
-                dos = new DataOutputStream(this.connection.getOutputStream());
+                dos = new DataOutputStream(this.httpURLConnection.getOutputStream());
                 dos.writeBytes(paramsStr);
             }
             finally
@@ -148,10 +162,10 @@ public class XyneexURL
     public void setPutRequest() throws IOException
     {
         this.url = new URL(address);
-        this.connection = (HttpURLConnection)this.url.openConnection();
+        this.httpURLConnection = (HttpURLConnection)this.url.openConnection();
         //this.setRequestProperties();
-        this.connection.setRequestMethod(PUT);
-        this.connection.setRequestProperty("Content-Type", "application/octet-stream");
+        this.httpURLConnection.setRequestMethod(PUT);
+        this.httpURLConnection.setRequestProperty("Content-Type", "application/octet-stream");
         Set<Map.Entry<String, String>> properties = this.propertiesMap.entrySet();
         if(!properties.isEmpty())
         {
@@ -161,16 +175,16 @@ public class XyneexURL
                 Map.Entry<String, String> property = iterator.next();
                 String name = property.getKey();
                 String value = URLEncoder.encode(property.getValue(), "UTF-8");
-                this.connection.setRequestProperty(name, value);
+                this.httpURLConnection.setRequestProperty(name, value);
             }
         }
-        this.connection.setDoOutput(true);
-        this.connection.connect();
+        this.httpURLConnection.setDoOutput(true);
+        this.httpURLConnection.connect();
         try(InputStream inputStream = new ByteArrayInputStream(this.xml.getBytes(Charset.forName("UTF-8")));)
         {
             try(BufferedInputStream bis = new BufferedInputStream(inputStream, BUFFER_SIZE);)
             {
-                try(BufferedOutputStream out = new BufferedOutputStream(this.connection.getOutputStream(), BUFFER_SIZE);)
+                try(BufferedOutputStream out = new BufferedOutputStream(this.httpURLConnection.getOutputStream(), BUFFER_SIZE);)
                 {
                     byte[] bytes = new byte[BUFFER_SIZE];
                     int bytesRead;
@@ -189,10 +203,10 @@ public class XyneexURL
     {
         this.currentBytesRead = 0;
         this.url = new URL(address);
-        this.connection = (HttpURLConnection)this.url.openConnection();
+        this.httpURLConnection = (HttpURLConnection)this.url.openConnection();
         //this.setRequestProperties();
-        this.connection.setRequestMethod(PUT);
-        this.connection.setRequestProperty("Content-Type", "application/octet-stream");
+        this.httpURLConnection.setRequestMethod(PUT);
+        this.httpURLConnection.setRequestProperty("Content-Type", "application/octet-stream");
         Set<Map.Entry<String, String>> properties = this.propertiesMap.entrySet();
         if(!properties.isEmpty())
         {
@@ -202,16 +216,16 @@ public class XyneexURL
                 Map.Entry<String, String> property = iterator.next();
                 String name = property.getKey();
                 String value = URLEncoder.encode(property.getValue(), "UTF-8");
-                this.connection.setRequestProperty(name, value);
+                this.httpURLConnection.setRequestProperty(name, value);
             }
         }
-        this.connection.setDoOutput(true);
-        this.connection.connect();
+        this.httpURLConnection.setDoOutput(true);
+        this.httpURLConnection.connect();
         try(InputStream inputStream = new FileInputStream(this.file);)
         {
             try(BufferedInputStream bis = new BufferedInputStream(inputStream, BUFFER_SIZE);)
             {
-                try(BufferedOutputStream out = new BufferedOutputStream(this.connection.getOutputStream(), BUFFER_SIZE);)
+                try(BufferedOutputStream out = new BufferedOutputStream(this.httpURLConnection.getOutputStream(), BUFFER_SIZE);)
                 {
                     byte[] bytes = new byte[BUFFER_SIZE];
                     int bytesRead;
@@ -255,34 +269,155 @@ public class XyneexURL
 
     public String getResponse() throws IOException
     {
-        if(this.connection != null)
-            try(InputStream inputStream = this.connection.getInputStream())
-            {
-                String response = IOUtils.toString(inputStream, "UTF-8");
-                return response;
-            }
+        if(this.httpURLConnection != null)
+            try(InputStream inputStream = this.httpURLConnection.getInputStream())
+        {
+            String response = IOUtils.toString(inputStream, "UTF-8");
+            return response;
+        }
+        else
+            throw new UnsupportedOperationException("There is no connection.");
+    }
+
+    public String getHTTPSResponse() throws IOException
+    {
+        if(this.httpsURLConnection != null)
+            try(InputStream inputStream = this.httpsURLConnection.getInputStream())
+        {
+            String response = IOUtils.toString(inputStream, "UTF-8");
+            return response;
+        }
         else
             throw new UnsupportedOperationException("There is no connection.");
     }
 
     public int getStatusCode() throws IOException
     {
-        return this.connection.getResponseCode();
+        return this.httpURLConnection.getResponseCode();
     }
 
     public String getResponseMessage() throws IOException
     {
-        if(this.connection != null)
-            return this.connection.getResponseMessage();
+        if(this.httpURLConnection != null)
+            return this.httpURLConnection.getResponseMessage();
         else
             throw new UnsupportedOperationException("There is no connection.");
     }
 
     public String getResultingAddress()
     {
-        if(this.connection != null)
+        if(this.httpURLConnection != null)
             return this.address;
         else
             throw new UnsupportedOperationException("There is no connection.");
+    }
+
+    public void setHTTPSGetRequest() throws IOException, NoSuchAlgorithmException, KeyManagementException
+    {
+        Set<Map.Entry<String, String>> parameters = this.parametersMap.entrySet();
+        if(!parameters.isEmpty())
+        {
+            this.address += "?";
+            Iterator<Map.Entry<String, String>> iterator = parameters.iterator();
+            while(iterator.hasNext())
+            {
+                Map.Entry<String, String> parameter = iterator.next();
+                String name = parameter.getKey();
+                String value = parameter.getValue();
+                this.address += name + "=" + URLEncoder.encode(value, "UTF-8");
+                if(iterator.hasNext())
+                    this.address += "&";
+            }
+        }
+        // configure the SSLContext with a TrustManager
+        SSLContext ctx = SSLContext.getInstance("TLS");
+        ctx.init(new KeyManager[0], new TrustManager[]
+        {
+            new DefaultTrustManager()
+        }, new SecureRandom());
+        SSLContext.setDefault(ctx);
+        this.url = new URL(address);
+        this.httpsURLConnection = (HttpsURLConnection)this.url.openConnection();
+        this.httpsURLConnection.setHostnameVerifier(new HostnameVerifier()
+        {
+            @Override
+            public boolean verify(String arg0, SSLSession arg1)
+            {
+                return true;
+            }
+        });
+        this.httpsURLConnection.setRequestMethod("GET");
+    }
+
+    public void setHTTPSPostRequest() throws IOException, NoSuchAlgorithmException, KeyManagementException
+    {
+        // configure the SSLContext with a TrustManager
+        SSLContext ctx = SSLContext.getInstance("TLS");
+        ctx.init(new KeyManager[0], new TrustManager[]
+        {
+            new DefaultTrustManager()
+        }, new SecureRandom());
+        SSLContext.setDefault(ctx);
+        this.url = new URL(address);
+        this.httpsURLConnection = (HttpsURLConnection)this.url.openConnection();
+        this.httpsURLConnection.setHostnameVerifier(new HostnameVerifier()
+        {
+            @Override
+            public boolean verify(String arg0, SSLSession arg1)
+            {
+                return true;
+            }
+        });
+        this.httpsURLConnection.setRequestMethod("POST");
+        Set<Map.Entry<String, String>> parameters = this.parametersMap.entrySet();
+        if(!parameters.isEmpty())
+        {
+            String paramsStr = "";
+            Iterator<Map.Entry<String, String>> iterator = parameters.iterator();
+            while(iterator.hasNext())
+            {
+                Map.Entry<String, String> parameter = iterator.next();
+                String name = parameter.getKey();
+                String value = parameter.getValue();
+                paramsStr += name + "=" + URLEncoder.encode(value, "UTF-8");
+                if(iterator.hasNext())
+                    paramsStr += "&";
+            }
+            this.httpsURLConnection.setDoOutput(true);
+            DataOutputStream dos = null;
+            try
+            {
+                dos = new DataOutputStream(this.httpsURLConnection.getOutputStream());
+                dos.writeBytes(paramsStr);
+            }
+            finally
+            {
+                if(dos != null)
+                {
+                    dos.flush();
+                    dos.close();
+                }
+            }
+        }
+    }
+
+    private static class DefaultTrustManager implements X509TrustManager
+    {
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException
+        {
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException
+        {
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers()
+        {
+            return null;
+        }
     }
 }
