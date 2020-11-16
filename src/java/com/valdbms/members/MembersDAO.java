@@ -189,10 +189,15 @@ public class MembersDAO
         EntityManager em = DBConfiguration.getEntityManager();
         try
         {
-            String sql = "SELECT * FROM " + Member.MEMBERS + " WHERE " + Member.ROLE + " = 'CHAIRMAN' ";
+            String sql = "SELECT * FROM " + Member.MEMBERS + " WHERE " + Member.ROLE + " = ?";
             Query q = em.createNativeQuery(sql, Member.class);
+            q.setParameter(1, "Chairman");
             List<Member> members = q.getResultList();
-            return members;
+            List<Member> chairmen = new ArrayList<>();
+            for(Member member : members)
+                if(member.getRole().equals("Chairman"))
+                    chairmen.add(member);
+            return chairmen;
         }
         finally
         {
