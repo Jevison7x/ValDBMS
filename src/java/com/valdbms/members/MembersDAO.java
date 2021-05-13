@@ -11,6 +11,9 @@
  */
 package com.valdbms.members;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.valdbms.database.DBConfiguration;
 import com.valdbms.util.XyneexURL;
 import java.io.IOException;
@@ -330,5 +333,19 @@ public class MembersDAO
         xyneexURL.setHTTPSGetRequest();
         String response = xyneexURL.getHTTPSResponse();
         return response;
+    }
+
+    public static String sendBulkSMSNigeria(String senderId, String receiverPhoneNumber, String message, String smsURL, String apiToken) throws UnirestException
+    {
+        HttpResponse<String> request = Unirest.post(smsURL)
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .field("from", senderId)
+                .field("to", receiverPhoneNumber)
+                .field("body", message)
+                .field("append_sender", 3)
+                .field("api_token", apiToken)
+                .field("dnd", "corporate")
+                .asString();
+        return request.getBody();
     }
 }

@@ -29,13 +29,9 @@ import javax.servlet.http.HttpSession;
  */
 public class MessageMembersServlet extends HttpServlet
 {
-    private static final String SENDER = "ValOzigbo";
-    private static final String API_KEY = "fHTGT6PiRxIE1ZrMvOTDcsu0cM5yiQKz2EnWAXxQqkMt6UlAUHwHGIBFxQW4";
-
-    private static final String OWNER_EMAIL = "ebs_1978@yahoo.com";
-    private static final String SUB_ACCOUNT = "VALDBMS";
-    private static final String SUB_ACCOUNT_PASSWORD = "lookout4detox";
-    private static final String SMS_URL = "http://smslive247.com/http/index.aspx";
+    private static final String SENDER_ID = "Val Ozigbo";
+    private static final String API_TOKEN = "ZoiNwvO08ydKuvVgcqjCgl8cxcXURhdAPvnBjrScpGwvqIJ1zkS4Sks8Nrmk";
+    private static final String SMS_URL = "https://www.bulksmsnigeria.com/api/v1/sms/create";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -69,9 +65,6 @@ public class MessageMembersServlet extends HttpServlet
                 }
             String originalMessage = request.getParameter("message");
             if(phonenumbers != null)
-            {
-                String loginResponse = MembersDAO.loginSMSLive247(SMS_URL, SUB_ACCOUNT, OWNER_EMAIL, SUB_ACCOUNT_PASSWORD);
-                String msgId = loginResponse.split(":")[1].trim();
                 for(String phoneNumber : phonenumbers)
                 {
                     String smsMessage = originalMessage;
@@ -83,13 +76,11 @@ public class MessageMembersServlet extends HttpServlet
                         smsMessage = smsMessage.replace("${firstName}", firstName);
                         smsMessage = smsMessage.replace("${lastName}", lastName);
                     }
-                    //HttpClientAcceptSelfSignedCertificate.bulkSmsApiConnection(API_KEY, SENDER, phoneNumber, smsMessage);
-                    //MembersDAO.sendSMSLive247(SMS_URL, msgId, smsMessage, SENDER, phoneNumber);
-                    String smsResponse = MembersDAO.sendSmartSMSSolutions(smsMessage, SENDER, phoneNumber);
+                    //String smsResponse = MembersDAO.sendSmartSMSSolutions(smsMessage, SENDER_ID, phoneNumber);
+                    String smsResponse = MembersDAO.sendBulkSMSNigeria(SENDER_ID, phoneNumber, smsMessage, SMS_URL, API_TOKEN);
                     System.out.println("SMS Response: " + smsResponse);
                     out.print(phoneNumber + ", ");
                 }
-            }
             else
                 out.print("empty phone numbers");
         }
