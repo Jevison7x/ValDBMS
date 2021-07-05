@@ -348,4 +348,18 @@ public class MembersDAO
                 .asString();
         return request.getBody();
     }
+
+    public static void sendMultiTexter(String email, String password, String message, String smsURL, String senderName, String phoneNumber) throws IOException
+    {
+        XyneexURL xyneexURL = new XyneexURL(smsURL);
+        xyneexURL.addParameter("email", email);
+        xyneexURL.addParameter("password", password);
+        xyneexURL.addParameter("message", message);
+        xyneexURL.addParameter("sender_name", senderName);
+        xyneexURL.addParameter("recipients", phoneNumber);
+        xyneexURL.addParameter("forcednd", "1");
+        xyneexURL.setGetRequest();
+        String response = xyneexURL.getResponse();
+        System.out.println(response);
+    }
 }

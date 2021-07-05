@@ -33,6 +33,12 @@ public class MessageMembersServlet extends HttpServlet
     private static final String API_TOKEN = "ZoiNwvO08ydKuvVgcqjCgl8cxcXURhdAPvnBjrScpGwvqIJ1zkS4Sks8Nrmk";
     private static final String SMS_URL = "https://www.bulksmsnigeria.com/api/v1/sms/create";
 
+    //MultiTexter URL, Email and Password
+    private static final String MULTI_TEXTER_URL = "https://app.multitexter.com/v2/app/sms";
+    private static final String EMAIL = "faithannie15@gmail.com";
+    private static final String PASSWORD = "christ123@";
+    private static final long serialVersionUID = 1L;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -77,9 +83,10 @@ public class MessageMembersServlet extends HttpServlet
                         smsMessage = smsMessage.replace("${lastName}", lastName);
                     }
                     //String smsResponse = MembersDAO.sendSmartSMSSolutions(smsMessage, SENDER_ID, phoneNumber);
-                    String smsResponse = MembersDAO.sendBulkSMSNigeria(SENDER_ID, phoneNumber, smsMessage, SMS_URL, API_TOKEN);
-                    System.out.println("SMS Response: " + smsResponse);
-                    out.print(phoneNumber + ", ");
+                    //String smsResponse = MembersDAO.sendBulkSMSNigeria(SENDER_ID, phoneNumber, smsMessage, SMS_URL, API_TOKEN);
+                    //System.out.println("SMS Response: " + smsResponse);
+                    //out.print(phoneNumber + ", ");
+                    MembersDAO.sendMultiTexter(EMAIL, PASSWORD, smsMessage, MULTI_TEXTER_URL, SENDER_ID, phoneNumber);
                 }
             else
                 out.print("empty phone numbers");

@@ -9,6 +9,7 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <description>1</description>
     <context-param>
         <description>The base URL for dashboard resources</description>
         <param-name>Dashboard URL</param-name>
