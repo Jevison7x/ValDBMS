@@ -13,14 +13,11 @@ package com.valdbms.users;
 
 import com.valdbms.database.DBConfiguration;
 import com.valdbms.security.DigestMatcher;
-import static com.valdbms.users.User.*;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import static com.valdbms.users.User.EMAIL;
+import static com.valdbms.users.User.USERS;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -31,53 +28,75 @@ import javax.persistence.Query;
  */
 public class UserDAO
 {
-    public static boolean createNewUser(User user, String encPassword) throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static boolean createNewUser(User user, String encPassword)
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        EntityTransaction tx = null;
+        try
         {
-            String sql = "INSERT INTO " + USERS + " ("
-                    + EMAIL + ", "
-                    + USER_NAME + ", "
-                    + PASSWORD + ", "
-                    + DATE_CREATED
-                    + ") VALUES (?, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, user.getEmail());
-            pst.setString(2, user.getUserName());
-            pst.setString(3, encPassword);
-            pst.setTimestamp(4, user.getDateCreated());
-            int update = pst.executeUpdate();
-            if(update == 1)
-                return true;
-            else
-                return false;
+            em = DBConfiguration.getEntityManager();
+            tx = em.getTransaction();
+            tx.begin();
+            String sql = "INSERT INTO " + User.USERS
+                    + " (" + User.EMAIL + ", " + User.USER_NAME + ", " + User.PASSWORD + ", " + User.DATE_CREATED + ") "
+                    + " VALUES (?, ?, ?, ?)";
+            Query query = em.createNativeQuery(sql);
+            query.setParameter(1, user.getEmail());
+            query.setParameter(2, user.getUserName());
+            query.setParameter(3, encPassword);
+            query.setParameter(4, user.getDateCreated());
+            int result = query.executeUpdate();
+            tx.commit();
+            return result == 1;
+        }
+        catch(Exception e)
+        {
+            if(tx != null && tx.isActive())
+                tx.rollback();
+            e.printStackTrace(System.err);
+            return false;
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 
-    public static User loginUser(String userNameOrEmail, String password) throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static User loginUser(String userNameOrEmail, String password)
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        try
         {
-            String sql = "SELECT * FROM " + USERS + " WHERE " + USER_NAME + " = ? OR " + EMAIL + " = ?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, userNameOrEmail);
-            pst.setString(2, userNameOrEmail);
-            ResultSet rs = pst.executeQuery();
-            if(rs.next())
-            {
-                String encPassword = rs.getString(PASSWORD);
-                DigestMatcher matcher = new DigestMatcher();
-                String salt = matcher.getSalt(encPassword);
-                boolean matched = matcher.doMatch(password, salt);
-                if(matched == true)
-                    return getUser(rs.getString(USER_NAME));
-                else
-                    throw new IllegalArgumentException("Invalid username or password.");
-            }
+            em = DBConfiguration.getEntityManager();
+            String sql = "SELECT " + User.USER_NAME + ", " + User.PASSWORD + " FROM " + User.USERS + " WHERE " + User.USER_NAME + " = ? OR " + User.EMAIL + " = ?";
+            Query query = em.createNativeQuery(sql);
+            query.setParameter(1, userNameOrEmail);
+            query.setParameter(2, userNameOrEmail);
+            List<Object[]> result = query.getResultList();
+            if(result.isEmpty())
+                throw new IllegalArgumentException("Invalid username or password.");
+            Object[] row = result.get(0);
+            String encPassword = (String)row[1];
+            DigestMatcher matcher = new DigestMatcher();
+            String salt = matcher.getSalt(encPassword);
+            boolean matched = matcher.doMatch(password, salt);
+            if(matched == true)
+                return getUser((String)row[0]);
             else
                 throw new IllegalArgumentException("Invalid username or password.");
+        }
+        catch(Exception e)
+        {
+            if(e instanceof IllegalArgumentException)
+                throw (IllegalArgumentException)e;
+            e.printStackTrace(System.err);
+            throw new IllegalArgumentException("Invalid username or password.");
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 
@@ -114,18 +133,26 @@ public class UserDAO
         }
     }
 
-    public static int getUsersTotalCount() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static int getUsersTotalCount()
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        try
         {
+            em = DBConfiguration.getEntityManager();
             String sql = "SELECT COUNT(*) FROM " + User.USERS;
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            if(rs.next())
-                return rs.getInt(1);
-            else
-                return 0;
+            Query query = em.createNativeQuery(sql);
+            Object result = query.getSingleResult();
+            return ((Number)result).intValue();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.err);
+            return 0;
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 }

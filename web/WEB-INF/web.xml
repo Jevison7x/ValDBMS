@@ -13,7 +13,7 @@
     <context-param>
         <description>The base URL for dashboard resources</description>
         <param-name>Dashboard URL</param-name>
-        <param-value>https://valdbms.com.ng</param-value>
+        <param-value>https://dashboard.valiants.me</param-value>
     </context-param>
     <filter>
         <filter-name>Session Filter</filter-name>

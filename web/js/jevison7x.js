@@ -11,7 +11,7 @@
  */
 
 var paceObject = {
-    defaultTitle: 'Val DBMS',
+    defaultTitle: 'Valiants DB',
     pageContent: 'page-content',
     linkSelector: 'a.ajax-link',
     sidebarNav: 'sidebarnav',
@@ -306,7 +306,7 @@ function initMembersPage(){
         var $selectedRow = $('#members-table tbody').find('tr.selected');
         var phoneNumber = $selectedRow.find('td.phone-number').html();
         console.log('Selected Phone Number: ', phoneNumber);
-        ajaxPageLoad('edit-member', 'Val DBMS', paceObject, {phoneNumber: phoneNumber});
+        ajaxPageLoad('edit-member', 'Valiants DB', paceObject, {phoneNumber: phoneNumber});
     });
 
     $('#delete-record').click(function(){
@@ -322,7 +322,7 @@ function initMembersPage(){
             },
             success: function(data, textStatus, jqXHR){
                 if(data === 'success')
-                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject, {a: 1});
+                    ajaxPageLoad('members', 'Valiants DB - Members', paceObject, {a: 1});
             },
             complete: function(jqXHR, textStatus){
                 $icon.removeClass('fa-spin').removeClass('fa-refresh').addClass('fa-times');
@@ -409,11 +409,12 @@ function initFormActions(){
                 $('#lga-addon i').removeClass('fa-refresh').removeClass('fa-spin').addClass('fa-weight');
             },
             success: function(data, textStatus, jqXHR){
+                if(typeof data === "string")
+                    data = JSON.parse(data);
                 $lgaSelect.html('');
                 $lgaSelect.append('<option value="">Please select</option>');
-                for(var i = 0; i < data.length; i++){
-                    $lgaSelect.append('<option value="' + data[i] + '">' + data[i] + '</option>');
-                }
+                for(var i = 0; i < data.length; i++)
+                    $lgaSelect.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
             },
             error: function(jqXHR, textStatus, errorThrown){
                 Swal.fire({
@@ -518,7 +519,7 @@ function initNewMemberSubmitFormEvent()
             },
             success: function(data, textStatus, jqXHR){
                 if(data === 'success')
-                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject, {a: 1});
+                    ajaxPageLoad('members', 'Valiants DB - Members', paceObject, {a: 1});
                 else
                     $('.card-header').html('<strong><i class="fas fa-warning"></i> ' + data + '</strong>').addClass('error-in-form');
             },
@@ -568,7 +569,7 @@ function initEditMemberSubmitFormEvent()
             },
             success: function(data, textStatus, jqXHR){
                 if(data === 'success')
-                    ajaxPageLoad('members', 'Val DBMS - Members', paceObject, {a: 2});
+                    ajaxPageLoad('members', 'Valiants DB - Members', paceObject, {a: 2});
                 else
                     $('.card-header').html('<strong><i class="fas fa-warning"></i> ' + data + '</strong>').addClass('error-in-form');
             },

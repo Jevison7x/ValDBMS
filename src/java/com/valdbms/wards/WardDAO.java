@@ -12,11 +12,6 @@
 package com.valdbms.wards;
 
 import com.valdbms.database.DBConfiguration;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -88,18 +83,26 @@ public class WardDAO
         }
     }
 
-    public static int getWardsTotalCount() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static int getWardsTotalCount()
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        try
         {
+            em = DBConfiguration.getEntityManager();
             String sql = "SELECT COUNT(*) FROM " + Ward.WARDS;
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            if(rs.next())
-                return rs.getInt(1);
-            else
-                return 0;
+            Query query = em.createNativeQuery(sql);
+            Object result = query.getSingleResult();
+            return ((Number)result).intValue();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.err);
+            return 0;
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 

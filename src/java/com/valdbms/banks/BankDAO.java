@@ -12,14 +12,10 @@
 package com.valdbms.banks;
 
 import com.valdbms.database.DBConfiguration;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,18 +24,29 @@ import javax.persistence.EntityManager;
  */
 public class BankDAO
 {
-    public static List<String> getDistinctBanks() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static List<String> getDistinctBanks()
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        try
         {
+            em = DBConfiguration.getEntityManager();
             String sql = "SELECT DISTINCT " + Bank.BANK + " FROM " + Bank.BANKS;
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            Query query = em.createNativeQuery(sql);
+            List<Object> result = query.getResultList();
             List<String> banksList = new ArrayList<>();
-            while(rs.next())
-                banksList.add(rs.getString(Bank.BANK));
+            for(Object obj : result)
+                banksList.add((String)obj);
             return banksList;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.err);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 

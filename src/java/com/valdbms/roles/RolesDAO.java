@@ -12,14 +12,10 @@
 package com.valdbms.roles;
 
 import com.valdbms.database.DBConfiguration;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,18 +24,29 @@ import javax.persistence.EntityManager;
  */
 public class RolesDAO
 {
-    public static List<String> getDistinctRoles() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static List<String> getDistinctRoles()
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        try
         {
-            String sql = "SELECT DISTINCT  " + Role.ROLE + " FROM " + Role.ROLES;
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
+            em = DBConfiguration.getEntityManager();
+            String sql = "SELECT DISTINCT " + Role.ROLE + " FROM " + Role.ROLES;
+            Query query = em.createNativeQuery(sql);
+            List<Object> result = query.getResultList();
             List<String> roleList = new ArrayList<>();
-            while(rs.next())
-                roleList.add(rs.getString(Role.ROLE));
+            for(Object obj : result)
+                roleList.add((String)obj);
             return roleList;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.err);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 

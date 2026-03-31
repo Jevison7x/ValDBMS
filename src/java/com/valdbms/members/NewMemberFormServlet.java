@@ -13,6 +13,9 @@ package com.valdbms.members;
 
 import com.valdbms.banks.BankDAO;
 import com.valdbms.roles.RolesDAO;
+import com.valdbms.states.LGA;
+import com.valdbms.states.State;
+import com.valdbms.states.StatesDAO;
 import com.valdbms.wards.LGA_DAO;
 import com.valdbms.wards.Ward;
 import com.valdbms.wards.WardDAO;
@@ -57,9 +60,9 @@ public class NewMemberFormServlet extends HttpServlet
             }
             else if(request.getParameter("getLGAs") != null)
             {
-                String state = request.getParameter("state");
-                List<String> lgaList = LGA_DAO.getDistinctLGAs(state);
-                JSONArray jSONArray = new JSONArray(lgaList);
+                int stateId = Integer.parseInt(request.getParameter("state"));
+                List<LGA> lgas = LGA_DAO.getLGAs(stateId);
+                JSONArray jSONArray = new JSONArray(lgas);
                 try(PrintWriter out = response.getWriter())
                 {
                     response.setContentType("application/json");
@@ -70,8 +73,10 @@ public class NewMemberFormServlet extends HttpServlet
             {
                 List<String> roleList = RolesDAO.getDistinctRoles();
                 List<String> banksList = BankDAO.getDistinctBanks();
+                List<State> statesList = StatesDAO.getAllStates();
                 request.setAttribute("roleList", roleList);
                 request.setAttribute("banksList", banksList);
+                request.setAttribute("statesList", statesList);
                 request.getRequestDispatcher("new-member-form").forward(request, response);
             }
         }

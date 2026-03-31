@@ -10,9 +10,9 @@
         <class>com.valdbms.banks.Bank</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/royalsee_valdbms"/>
-            <property name="javax.persistence.jdbc.user" value="royalsee_valdbms"/>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/valiants_db?serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="valiants_user"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.password" value="$3cr3tP@55w0rd"/>
         </properties>
     </persistence-unit>

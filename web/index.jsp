@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Val DBMS</title>
+        <title>Valiants Dashboard</title>
         <!-- Meta-Tags -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
@@ -43,8 +43,8 @@
                 <div class="agile_info">
                     <div class="w3l_form">
                         <div class="left_grid_info">
-                            <h1>Val DBMS</h1>
-                            <p>Database Management System for L.G.A. Records.</p>
+                            <h1>Valiants Movement Dashboard</h1>
+                            <p>Database Management System for Valiants Movement Records.</p>
                             <img src="landing/images/image.jpg" alt="" />
                         </div>
                     </div>
@@ -90,7 +90,7 @@
             </div>
             <!-- footer -->
             <div class="footer">
-                <p>&copy; 2020 ValDBMS</p>
+                <p>&copy; 2026 Valiant Movement</p>
             </div>
             <!-- footer -->
         </div>

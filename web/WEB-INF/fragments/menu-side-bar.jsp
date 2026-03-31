@@ -11,7 +11,7 @@
                 <div class="logo">
                     <a href="#">
                         <img src="${dashboardURL}/images/icon/logo.png" alt="Cool Admin" />
-                        <h3>Val DBMS</h3>
+                        <h3>Valiants DB</h3>
                     </a>
                 </div>
                 <div class="menu-sidebar__content js-scrollbar1">

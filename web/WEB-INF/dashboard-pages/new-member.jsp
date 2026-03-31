@@ -142,99 +142,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr/>
                                                     <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="has-success form-group">
-                                                                <label for="state" class="form-control-label">State: </label>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-addon">
-                                                                        <i class="fa fa-location-arrow"></i>
-                                                                    </div>
-                                                                    <select name="state" id="state" class="form-control" required>
-                                                                        <option value="">Please select</option>
-                                                                        <option value="Abia">Abia</option>
-                                                                        <option value="Adamawa">Adamawa</option>
-                                                                        <option value="Akwa Ibom">Akwa Ibom</option>
-                                                                        <option value="Anambra">Anambra</option>
-                                                                        <option value="Bauchi">Bauchi</option>
-                                                                        <option value="Bayelsa">Bayelsa</option>
-                                                                        <option value="Benue">Benue</option>
-                                                                        <option value="Borno">Borno</option>
-                                                                        <option value="Cross River">Cross River</option>
-                                                                        <option value="Delta">Delta</option>
-                                                                        <option value="Ebonyi">Ebonyi</option>
-                                                                        <option value="Edo">Edo</option>
-                                                                        <option value="Ekiti">Ekiti</option>
-                                                                        <option value="Enugu">Enugu</option>
-                                                                        <option value="Gombe">Gombe</option>
-                                                                        <option value="Imo">Imo</option>
-                                                                        <option value="Jigawa">Jigawa</option>
-                                                                        <option value="Kaduna">Kaduna</option>
-                                                                        <option value="Katsina">Katsina</option>
-                                                                        <option value="Kanu">Kanu</option>
-                                                                        <option value="Kebbi">Kebbi</option>
-                                                                        <option value="Kogi">Kogi</option>
-                                                                        <option value="Kwara">Kwara</option>
-                                                                        <option value="Lagos">Lagos</option>
-                                                                        <option value="Nasarawa">Nasarawa</option>
-                                                                        <option value="Niger">Niger</option>
-                                                                        <option value="Ogun">Ogun</option>
-                                                                        <option value="Ondo">Ondo</option>
-                                                                        <option value="Osun">Osun</option>
-                                                                        <option value="Oyo">Oyo</option>
-                                                                        <option value="Plateau">Plateau</option>
-                                                                        <option value="Rivers">Rivers</option>
-                                                                        <option value="Sokoto">Sokoto</option>
-                                                                        <option value="Taraba">Taraba</option>
-                                                                        <option value="Yobe">Yobe</option>
-                                                                        <option value="Zamfara">Zamfara</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="has-success form-group">
-                                                                <label for="lga" class="form-control-label">L.G.A.: </label>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-addon" id="lga-addon">
-                                                                        <i class="fa fa-weight"></i>
-                                                                    </div>
-                                                                    <input type="text" name="lga" id="lga" class="form-control-success form-control hidden" placeholder="Add New L.G.A." required/>
-                                                                    <select name="lga-select" id="lga-select" class="form-control">
-                                                                        <option value="">Please select</option>
-                                                                    </select>
-                                                                    <div class="input-group-addon hidden">
-                                                                        <button id="select-lga" type="button"><i class="fa fa-arrow-down"></i> Select L.G.A.</button>
-                                                                    </div>
-                                                                    <div class="input-group-addon">
-                                                                        <button id="add-lga" type="button"><i class="fa fa-plus"></i> Add New L.G.A.</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="has-success form-group">
-                                                                <label for="ward" class="form-control-label">Ward: </label>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-addon" id="ward-addon">
-                                                                        <i class="fa fa-navicon"></i>
-                                                                    </div>
-                                                                    <input type="text" name="ward" id="ward" class="form-control-success form-control hidden" placeholder="Add New Ward" required/>
-                                                                    <select name="ward-select" id="ward-select" class="form-control">
-                                                                        <option value="">Please select</option>
-                                                                    </select>
-                                                                    <div class="input-group-addon hidden">
-                                                                        <button id="select-ward" type="button"><i class="fa fa-arrow-down"></i> Select Ward</button>
-                                                                    </div>
-                                                                    <div class="input-group-addon">
-                                                                        <button id="add-ward" type="button"><i class="fa fa-plus"></i> Add New Ward</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <div class="col-md-6">
                                                             <div class="has-success form-group">
                                                                 <label for="role" class="form-control-label">Role: </label>
@@ -255,6 +163,79 @@
                                                                     </div>
                                                                     <div class="input-group-addon">
                                                                         <button id="add-role" type="button"><i class="fa fa-plus"></i> Add New Role</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr/>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="has-success form-group">
+                                                                <label for="state" class="form-control-label">State: </label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-location-arrow"></i>
+                                                                    </div>
+                                                                    <select name="state" id="state" class="form-control" required>
+                                                                        <option value="">Please select</option>
+                                                                    <c:forEach var="state" items="${statesList}">
+                                                                        <jsp:useBean id="state" class="com.valdbms.states.State"/>
+                                                                        <option value="${state.id}">${state.name}</option>
+                                                                    </c:forEach>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="has-success form-group">
+                                                                <label for="lga" class="form-control-label">L.G.A.: </label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon" id="lga-addon">
+                                                                        <i class="fa fa-weight"></i>
+                                                                    </div>
+                                                                    <input type="text" name="lga" id="lga" class="form-control-success form-control hidden" placeholder="Add New L.G.A." required/>
+                                                                    <select name="lga-select" id="lga-select" class="form-control">
+                                                                        <option value="">Please select</option>
+                                                                    </select>
+                                                                    <div class="input-group-addon hidden">
+                                                                        <button id="select-lga" type="button"><i class="fa fa-arrow-down"></i> Select L.G.A.</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="has-success form-group">
+                                                                <label for="ward" class="form-control-label">Ward: </label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon" id="ward-addon">
+                                                                        <i class="fa fa-navicon"></i>
+                                                                    </div>
+                                                                    <input type="text" name="ward" id="ward" class="form-control-success form-control hidden" placeholder="Add New Ward" required/>
+                                                                    <select name="ward-select" id="ward-select" class="form-control">
+                                                                        <option value="">Please select</option>
+                                                                    </select>
+                                                                    <div class="input-group-addon hidden">
+                                                                        <button id="select-ward" type="button"><i class="fa fa-arrow-down"></i> Select Ward</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="has-success form-group">
+                                                                <label for="polling-unit-select" class="form-control-label">Polling Unit </label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-navicon"></i>
+                                                                    </div>
+                                                                    <input type="text" name="polling-unit" id="polling-unit" class="form-control-success form-control hidden" placeholder="Polling Unit" required/>
+                                                                    <select name="polling-unit-select" id="polling-unit-select" class="form-control">
+                                                                        <option value="">Please select</option>
+                                                                    </select>
+                                                                    <div class="input-group-addon hidden">
+                                                                        <button id="select-polling-unit" type="button"><i class="fa fa-arrow-down"></i> Select Polling Unit</button>
                                                                     </div>
                                                                 </div>
                                                             </div>

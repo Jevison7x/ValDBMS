@@ -11,12 +11,12 @@
  */
 package com.valdbms.security;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.valdbms.adminpins.AdminPinDAO;
 import com.valdbms.users.User;
 import com.valdbms.users.UserDAO;
 import com.valdbms.util.DateTimeUtil;
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -76,7 +76,7 @@ public class CreateAccountServlet extends HttpServlet
                 RequestDispatcher dispatcher = request.getRequestDispatcher("create-account");
                 dispatcher.forward(request, response);
             }
-            else if(xcp instanceof MySQLIntegrityConstraintViolationException)
+            else if(xcp instanceof SQLIntegrityConstraintViolationException)
             {
                 request.setAttribute("errorMessage", userName + " already exists.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("create-account");

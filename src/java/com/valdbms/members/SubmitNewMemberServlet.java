@@ -11,7 +11,6 @@
  */
 package com.valdbms.members;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.valdbms.banks.Bank;
 import com.valdbms.banks.BankDAO;
 import com.valdbms.roles.Role;
@@ -24,6 +23,7 @@ import com.valdbms.wards.WardDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.SQLIntegrityConstraintViolationException;
 import javax.persistence.EntityExistsException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -126,7 +126,7 @@ public class SubmitNewMemberServlet extends HttpServlet
         }
         catch(Exception xcp)
         {
-            if(xcp instanceof EntityExistsException || ExceptionUtil.isCause(MySQLIntegrityConstraintViolationException.class, xcp))
+            if(xcp instanceof EntityExistsException || ExceptionUtil.isCause(SQLIntegrityConstraintViolationException.class, xcp))
                 out.print("The phone number " + mobileNo + " already exists.");
             else
                 out.print(xcp.getMessage());

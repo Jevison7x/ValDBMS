@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Val DBMS</title>
+        <title>Valiants DB</title>
         <!-- Meta-Tags -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
@@ -43,7 +43,7 @@
                 <div class="agile_info">
                     <div class="w3l_form">
                         <div class="left_grid_info">
-                            <h1>Val DBMS</h1>
+                            <h1>Valiants DB</h1>
                             <p>Database Management System for L.G.A. Records.</p>
                             <img src="landing/images/image.jpg" alt="" />
                         </div>

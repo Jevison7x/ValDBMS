@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-9">
+                                <div class="col-lg-12">
                                     <h2 class="title-1 m-b-25">List of Ward Chairpersons</h2>
                                     <div class="table-responsive table--no-card m-b-40">
                                         <table class="table table-borderless table-striped table-earning">
@@ -123,25 +123,6 @@
                                             </c:forEach>
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <h2 class="title-1 m-b-25">Local Government Areas</h2>
-                                    <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
-                                        <div class="au-card-inner">
-                                            <div class="table-responsive">
-                                                <table class="table table-top-countries">
-                                                    <tbody>
-                                                    <c:forEach var="lga" items="${lgaSet}">
-                                                        <tr>
-                                                            <td>${lga}</td>
-                                                            <td class="text-right">${lgaWardsMap[lga]}</td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

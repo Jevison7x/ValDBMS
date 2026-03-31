@@ -19,12 +19,8 @@ import com.valdbms.util.XyneexURL;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -67,18 +63,26 @@ public class MembersDAO
         }
     }
 
-    public static int getMembersTotalCount() throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static int getMembersTotalCount()
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        try
         {
+            em = DBConfiguration.getEntityManager();
             String sql = "SELECT COUNT(*) FROM " + Member.MEMBERS;
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            if(rs.next())
-                return rs.getInt(1);
-            else
-                return 0;
+            Query query = em.createNativeQuery(sql);
+            Object result = query.getSingleResult();
+            return ((Number)result).intValue();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.err);
+            return 0;
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 
@@ -112,32 +116,29 @@ public class MembersDAO
         }
     }
 
-    public static int getSearchTotal(String searchCriteria, String sortColumn, String sortDirection) throws SQLException, IOException, IllegalArgumentException, ClassNotFoundException
+    public static int getSearchTotal(String searchCriteria, String sortColumn, String sortDirection)
     {
-        DBConfiguration dbConfig = new DBConfiguration();
-        try(Connection conn = dbConfig.getDatabaseConnection())
+        EntityManager em = null;
+        try
         {
-            String sql = "SELECT COUNT(*) FROM " + Member.MEMBERS + getSearchSQL(sortColumn, sortDirection);
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, "%" + searchCriteria + "%");
-            pst.setString(2, "%" + searchCriteria + "%");
-            pst.setString(3, "%" + searchCriteria + "%");
-            pst.setString(4, "%" + searchCriteria + "%");
-            pst.setString(5, "%" + searchCriteria + "%");
-            pst.setString(6, "%" + searchCriteria + "%");
-            pst.setString(7, "%" + searchCriteria + "%");
-            pst.setString(8, "%" + searchCriteria + "%");
-            pst.setString(9, "%" + searchCriteria + "%");
-            pst.setString(10, "%" + searchCriteria + "%");
-            pst.setString(11, "%" + searchCriteria + "%");
-            pst.setString(12, "%" + searchCriteria + "%");
-            pst.setString(13, "%" + searchCriteria + "%");
-            pst.setString(14, "%" + searchCriteria + "%");
-            ResultSet rs = pst.executeQuery();
-            if(rs.next())
-                return rs.getInt(1);
-            else
-                return 0;
+            em = DBConfiguration.getEntityManager();
+            String sql = "SELECT COUNT(*) FROM " + Member.MEMBERS + getSearchSQL(sanitizeSortColumn(sortColumn), sanitizeSortDirection(sortDirection));
+            Query query = em.createNativeQuery(sql);
+            String value = "%" + searchCriteria + "%";
+            for(int i = 1; i <= 14; i++)
+                query.setParameter(i, value);
+            Object result = query.getSingleResult();
+            return ((Number)result).intValue();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.err);
+            return 0;
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 
@@ -159,6 +160,32 @@ public class MembersDAO
                 + Member.EMAIL + " LIKE ? OR "
                 + Member.ADDED_BY + " LIKE ? "
                 + "ORDER BY " + colVal + " " + sortDirection;
+    }
+
+    private static String sanitizeSortColumn(String colVal)
+    {
+        List<String> allowed = Arrays.asList(
+                Member.MOBILE_NO,
+                Member.TITLE,
+                Member.FIRST_NAME,
+                Member.MIDDLE_NAME,
+                Member.LAST_NAME,
+                Member.ROLE,
+                Member.STATE,
+                Member.LGA,
+                Member.WARD,
+                Member.BANK,
+                Member.ACCOUNT_NAME,
+                Member.ACCOUNT_NO,
+                Member.EMAIL,
+                Member.ADDED_BY
+        );
+        return allowed.contains(colVal) ? colVal : Member.FIRST_NAME;
+    }
+
+    private static String sanitizeSortDirection(String sortDirection)
+    {
+        return "DESC".equalsIgnoreCase(sortDirection) ? "DESC" : "ASC";
     }
 
     public static List<Member> filteredMembers(String role, String state, String lga, String ward, String bank)

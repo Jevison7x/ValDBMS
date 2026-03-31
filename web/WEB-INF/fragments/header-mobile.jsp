@@ -11,8 +11,8 @@
                     <div class="container-fluid">
                         <div class="header-mobile-inner">
                             <a class="logo" href="home">
-                                <img src="${dashboardURL}/images/icon/logo.png" alt="Val DBMS" />
-                                <h3>Val DBMS</h3>
+                                <img src="${dashboardURL}/images/icon/logo.png" alt="Valiants DB" />
+                                <h3>Valiants DB</h3>
                             </a>
                             <button class="hamburger hamburger--slider" type="button">
                                 <span class="hamburger-box">
