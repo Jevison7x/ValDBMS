@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
                 <!-- MAIN CONTENT-->
                 <div id="dashboard-home" class="main-content">
                     <div class="section__content section__content--p30">
@@ -26,15 +27,12 @@
                                         <div class="overview__inner">
                                             <div class="overview-box clearfix">
                                                 <div class="icon">
-                                                    <i class="zmdi zmdi-accounts-list"></i>
+                                                    <i class="zmdi zmdi-globe"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>${totalMembers}</h2>
-                                                    <span>Registered Members</span>
+                                                    <h2><fmt:formatNumber value="${totalStates}" pattern="#,##0"/></h2>
+                                                    <span>States</span>
                                                 </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart1"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -44,15 +42,12 @@
                                         <div class="overview__inner">
                                             <div class="overview-box clearfix">
                                                 <div class="icon">
-                                                    <i class="zmdi zmdi-markunread-mailbox"></i>
+                                                    <i class="zmdi zmdi-accounts-list"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>${totalLgas}</h2>
-                                                    <span>Local Government Areas</span>
+                                                    <h2><fmt:formatNumber value="${totalMembers}" pattern="#,##0"/></h2>
+                                                    <span>Registered Members</span>
                                                 </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart2"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -62,15 +57,12 @@
                                         <div class="overview__inner">
                                             <div class="overview-box clearfix">
                                                 <div class="icon">
-                                                    <i class="zmdi zmdi-calendar-note"></i>
+                                                    <i class="zmdi zmdi-markunread-mailbox"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>${totalWards}</h2>
-                                                    <span>Wards</span>
+                                                    <h2><fmt:formatNumber value="${totalLGAs}" pattern="#,##0"/></h2>
+                                                    <span>Local Government Areas</span>
                                                 </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart3"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -80,15 +72,42 @@
                                         <div class="overview__inner">
                                             <div class="overview-box clearfix">
                                                 <div class="icon">
+                                                    <i class="zmdi zmdi-calendar-note"></i>
+                                                </div>
+                                                <div class="text">
+                                                    <h2><fmt:formatNumber value="${totalWards}" pattern="#,##0"/></h2>
+                                                    <span>Wards</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="overview-item overview-item--c1">
+                                        <div class="overview__inner">
+                                            <div class="overview-box clearfix">
+                                                <div class="icon">
+                                                    <i class="zmdi zmdi-pin-drop"></i>
+                                                </div>
+                                                <div class="text">
+                                                    <h2><fmt:formatNumber value="${totalPollingUnits}" pattern="#,##0"/></h2>
+                                                    <span>Polling Units</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="overview-item overview-item--c2">
+                                        <div class="overview__inner">
+                                            <div class="overview-box clearfix">
+                                                <div class="icon">
                                                     <i class="zmdi zmdi-account-o"></i>
                                                 </div>
                                                 <div class="text">
-                                                    <h2>${totalUsers}</h2>
+                                                    <h2><fmt:formatNumber value="${totalUsers}" pattern="#,##0"/></h2>
                                                     <span>Users</span>
                                                 </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart4"></canvas>
                                             </div>
                                         </div>
                                     </div>

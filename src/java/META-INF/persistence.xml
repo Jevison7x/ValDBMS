@@ -7,6 +7,7 @@
         <class>com.valdbms.roles.Role</class>
         <class>com.valdbms.users.User</class>
         <class>com.valdbms.wards.Ward</class>
+        <class>com.valdbms.pollingunits.PollingUnit</class>
         <class>com.valdbms.banks.Bank</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>

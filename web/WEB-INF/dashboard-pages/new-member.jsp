@@ -194,7 +194,6 @@
                                                                     <div class="input-group-addon" id="lga-addon">
                                                                         <i class="fa fa-weight"></i>
                                                                     </div>
-                                                                    <input type="text" name="lga" id="lga" class="form-control-success form-control hidden" placeholder="Add New L.G.A." required/>
                                                                     <select name="lga-select" id="lga-select" class="form-control">
                                                                         <option value="">Please select</option>
                                                                     </select>
@@ -213,7 +212,6 @@
                                                                     <div class="input-group-addon" id="ward-addon">
                                                                         <i class="fa fa-navicon"></i>
                                                                     </div>
-                                                                    <input type="text" name="ward" id="ward" class="form-control-success form-control hidden" placeholder="Add New Ward" required/>
                                                                     <select name="ward-select" id="ward-select" class="form-control">
                                                                         <option value="">Please select</option>
                                                                     </select>
@@ -227,10 +225,9 @@
                                                             <div class="has-success form-group">
                                                                 <label for="polling-unit-select" class="form-control-label">Polling Unit </label>
                                                                 <div class="input-group">
-                                                                    <div class="input-group-addon">
+                                                                    <div class="input-group-addon" id="polling-unit-addon">
                                                                         <i class="fa fa-navicon"></i>
                                                                     </div>
-                                                                    <input type="text" name="polling-unit" id="polling-unit" class="form-control-success form-control hidden" placeholder="Polling Unit" required/>
                                                                     <select name="polling-unit-select" id="polling-unit-select" class="form-control">
                                                                         <option value="">Please select</option>
                                                                     </select>

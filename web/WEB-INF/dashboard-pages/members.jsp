@@ -196,6 +196,7 @@
                                                 <th>STATE</th>
                                                 <th>LGA</th>
                                                 <th>WARD</th>
+                                                <th>POLLING UNIT</th>
                                                 <th>BANK</th>
                                                 <th>ACCOUNT NO</th>
                                                 <th>ACCOUNT NAME</th>

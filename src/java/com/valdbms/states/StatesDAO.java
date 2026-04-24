@@ -23,6 +23,29 @@ import javax.persistence.Query;
  */
 public class StatesDAO
 {
+    public static int getStatesTotalCount()
+    {
+        EntityManager em = null;
+        try
+        {
+            em = DBConfiguration.getEntityManager();
+            String sql = "SELECT COUNT(*) FROM " + State.STATES;
+            Query query = em.createNativeQuery(sql);
+            Object result = query.getSingleResult();
+            return ((Number)result).intValue();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.err);
+            return 0;
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
+        }
+    }
+
     public static List<State> getAllStates()
     {
         EntityManager em = DBConfiguration.getEntityManager();
@@ -36,6 +59,21 @@ public class StatesDAO
         finally
         {
             em.close();
+        }
+    }
+
+    public static State getState(int stateId)
+    {
+        EntityManager em = null;
+        try
+        {
+            em = DBConfiguration.getEntityManager();
+            return em.find(State.class, stateId);
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
         }
     }
 }

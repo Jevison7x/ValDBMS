@@ -14,10 +14,7 @@ package com.valdbms.wards;
 import com.valdbms.database.DBConfiguration;
 import com.valdbms.states.LGA;
 import static com.valdbms.states.LGA.LGA_S;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -28,33 +25,6 @@ import javax.persistence.Query;
  */
 public class LGA_DAO
 {
-    public static List<String> getDistinctLGAs(String state)
-    {
-        EntityManager em = null;
-        try
-        {
-            em = DBConfiguration.getEntityManager();
-            String sql = "SELECT DISTINCT " + Ward.LGA + " FROM " + Ward.WARDS + " WHERE " + Ward.STATE + " = ?";
-            Query query = em.createNativeQuery(sql);
-            query.setParameter(1, state);
-            List<Object> result = query.getResultList();
-            List<String> lgaList = new ArrayList<>();
-            for(Object obj : result)
-                lgaList.add((String)obj);
-            return lgaList;
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace(System.err);
-            return new ArrayList<>();
-        }
-        finally
-        {
-            if(em != null && em.isOpen())
-                em.close();
-        }
-    }
-
     public static int getLgasTotalCount()
     {
         EntityManager em = null;
@@ -76,25 +46,6 @@ public class LGA_DAO
             if(em != null && em.isOpen())
                 em.close();
         }
-    }
-
-    public static Map<String, Integer> getLGAWardsMap()
-    {
-        List<Ward> allWards = WardDAO.getAllWards();
-        Map<String, Integer> lgaWardsMap = new HashMap<>();
-        for(Ward ward : allWards)
-        {
-            String lga = ward.getLga();
-            if(lgaWardsMap.containsKey(lga))
-            {
-                int noOfWards = lgaWardsMap.get(lga);
-                noOfWards++;
-                lgaWardsMap.put(lga, noOfWards);
-            }
-            else
-                lgaWardsMap.put(lga, 1);
-        }
-        return lgaWardsMap;
     }
 
     public static List<LGA> getLGAs(int stateId) throws Exception
@@ -126,6 +77,21 @@ public class LGA_DAO
             Query query = em.createNativeQuery(sql, LGA.class);
             List<LGA> lgas = query.getResultList();
             return lgas;
+        }
+        finally
+        {
+            if(em != null && em.isOpen())
+                em.close();
+        }
+    }
+
+    public static LGA getLga(int lgaId)
+    {
+        EntityManager em = null;
+        try
+        {
+            em = DBConfiguration.getEntityManager();
+            return em.find(LGA.class, lgaId);
         }
         finally
         {

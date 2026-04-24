@@ -9,7 +9,7 @@
  * or visit www.xyneex.com if you need additional information or have any
  * questions.
  */
-package com.valdbms.wards;
+package com.valdbms.pollingunits;
 
 import com.valdbms.database.DBConfiguration;
 import java.util.List;
@@ -18,18 +18,18 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Ugimson
- * @since May 31, 2020 9:08:11 PM
+ * @author Jevison7x
+ * @since 17 Apr 2026 12:00:00
  */
-public class WardDAO
+public class PollingUnitDAO
 {
-    public static void createNewWard(Ward ward)
+    public static void createNewPollingUnit(PollingUnit pollingUnit)
     {
         EntityManager em = DBConfiguration.getEntityManager();
         try
         {
             em.getTransaction().begin();
-            em.persist(ward);
+            em.persist(pollingUnit);
             em.getTransaction().commit();
         }
         finally
@@ -38,13 +38,13 @@ public class WardDAO
         }
     }
 
-    public static int getWardsTotalCount()
+    public static int getPollingUnitsTotalCount()
     {
         EntityManager em = null;
         try
         {
             em = DBConfiguration.getEntityManager();
-            String sql = "SELECT COUNT(*) FROM " + Ward.WARDS;
+            String sql = "SELECT COUNT(*) FROM " + PollingUnit.POLLING_UNITS;
             Query query = em.createNativeQuery(sql);
             Object result = query.getSingleResult();
             return ((Number)result).intValue();
@@ -61,15 +61,15 @@ public class WardDAO
         }
     }
 
-    public static List<Ward> getAllWards()
+    public static List<PollingUnit> getAllPollingUnits()
     {
         EntityManager em = DBConfiguration.getEntityManager();
         try
         {
-            String sql = "SELECT * FROM " + Ward.WARDS;
-            Query q = em.createNativeQuery(sql, Ward.class);
-            List<Ward> allWards = q.getResultList();
-            return allWards;
+            String sql = "SELECT * FROM " + PollingUnit.POLLING_UNITS;
+            Query q = em.createNativeQuery(sql, PollingUnit.class);
+            List<PollingUnit> allPollingUnits = q.getResultList();
+            return allPollingUnits;
         }
         finally
         {
@@ -77,17 +77,17 @@ public class WardDAO
         }
     }
 
-    public static List<Ward> getWards(int lgaId) throws Exception
+    public static List<PollingUnit> getPollingUnits(int wardId) throws Exception
     {
         EntityManager em = null;
         try
         {
             em = DBConfiguration.getEntityManager();
-            String sql = "SELECT * FROM " + Ward.WARDS + " WHERE " + Ward.LGA_ID + " = ?";
-            Query query = em.createNativeQuery(sql, Ward.class);
-            query.setParameter(1, lgaId);
-            List<Ward> wards = query.getResultList();
-            return wards;
+            String sql = "SELECT * FROM " + PollingUnit.POLLING_UNITS + " WHERE " + PollingUnit.WARD_ID + " = ?";
+            Query query = em.createNativeQuery(sql, PollingUnit.class);
+            query.setParameter(1, wardId);
+            List<PollingUnit> pollingUnits = query.getResultList();
+            return pollingUnits;
         }
         finally
         {
@@ -96,13 +96,14 @@ public class WardDAO
         }
     }
 
-    public static Ward getWard(int wardId)
+    public static PollingUnit getPollingUnit(int pollingUnitId)
     {
         EntityManager em = null;
+
         try
         {
             em = DBConfiguration.getEntityManager();
-            return em.find(Ward.class, wardId);
+            return em.find(PollingUnit.class, pollingUnitId);
         }
         finally
         {

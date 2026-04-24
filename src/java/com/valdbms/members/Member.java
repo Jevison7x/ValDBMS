@@ -12,11 +12,20 @@
 package com.valdbms.members;
 
 import static com.valdbms.members.Member.MEMBERS;
+import com.valdbms.pollingunits.PollingUnit;
+import com.valdbms.states.LGA;
+import com.valdbms.states.State;
+import com.valdbms.wards.Ward;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,8 +38,10 @@ import javax.persistence.Table;
 public class Member implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    private int sn;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int sn;
     private String mobileNo;
     private String title;
     private String firstName;
@@ -39,9 +50,23 @@ public class Member implements Serializable
     private String gender;
     private Date dateOfBirth;
     private String role;
-    private String state;
-    private String lga;
-    private String ward;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "state", referencedColumnName = "id")
+    private State state;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "lga", referencedColumnName = "id")
+    private LGA lga;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ward", referencedColumnName = "id")
+    private Ward ward;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pollingUnit", referencedColumnName = "id")
+    private PollingUnit pollingUnit;
+
     private String bank;
     private String accountName;
     private String accountNo;
@@ -49,7 +74,6 @@ public class Member implements Serializable
     private Timestamp dateAdded;
     private String addedBy;
 
-    //Gender constants
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
 
@@ -62,9 +86,9 @@ public class Member implements Serializable
         return sn;
     }
 
-    public void setSn(int aSn)
+    public void setSn(int sn)
     {
-        sn = aSn;
+        this.sn = sn;
     }
 
     public String getMobileNo()
@@ -72,109 +96,9 @@ public class Member implements Serializable
         return mobileNo;
     }
 
-    public void setMobileNo(String aMobileNo)
+    public void setMobileNo(String mobileNo)
     {
-        mobileNo = aMobileNo;
-    }
-
-    public String getFirstName()
-    {
-        return firstName;
-    }
-
-    public void setFirstName(String aFirstName)
-    {
-        firstName = aFirstName;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-
-    public void setLastName(String aLastName)
-    {
-        lastName = aLastName;
-    }
-
-    public String getRole()
-    {
-        return role;
-    }
-
-    public void setRole(String aRole)
-    {
-        role = aRole;
-    }
-
-    public String getWard()
-    {
-        return ward;
-    }
-
-    public void setWard(String aWard)
-    {
-        ward = aWard;
-    }
-
-    public String getBank()
-    {
-        return bank;
-    }
-
-    public void setBank(String aBank)
-    {
-        bank = aBank;
-    }
-
-    public String getAccountNo()
-    {
-        return accountNo;
-    }
-
-    public void setAccountNo(String aAccountNo)
-    {
-        accountNo = aAccountNo;
-    }
-
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String aEmail)
-    {
-        email = aEmail;
-    }
-
-    public Timestamp getDateAdded()
-    {
-        return dateAdded;
-    }
-
-    public void setDateAdded(Timestamp aDateAdded)
-    {
-        dateAdded = aDateAdded;
-    }
-
-    public String getAddedBy()
-    {
-        return addedBy;
-    }
-
-    public void setAddedBy(String aAddedBy)
-    {
-        addedBy = aAddedBy;
-    }
-
-    public String getLga()
-    {
-        return lga;
-    }
-
-    public void setLga(String lga)
-    {
-        this.lga = lga;
+        this.mobileNo = mobileNo;
     }
 
     public String getTitle()
@@ -187,6 +111,16 @@ public class Member implements Serializable
         this.title = title;
     }
 
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
     public String getMiddleName()
     {
         return middleName;
@@ -197,24 +131,14 @@ public class Member implements Serializable
         this.middleName = middleName;
     }
 
-    public String getState()
+    public String getLastName()
     {
-        return state;
+        return lastName;
     }
 
-    public void setState(String state)
+    public void setLastName(String lastName)
     {
-        this.state = state;
-    }
-
-    public String getAccountName()
-    {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName)
-    {
-        this.accountName = accountName;
+        this.lastName = lastName;
     }
 
     public String getGender()
@@ -235,6 +159,116 @@ public class Member implements Serializable
     public void setDateOfBirth(Date dateOfBirth)
     {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getRole()
+    {
+        return role;
+    }
+
+    public void setRole(String role)
+    {
+        this.role = role;
+    }
+
+    public State getState()
+    {
+        return state;
+    }
+
+    public void setState(State state)
+    {
+        this.state = state;
+    }
+
+    public LGA getLga()
+    {
+        return lga;
+    }
+
+    public void setLga(LGA lga)
+    {
+        this.lga = lga;
+    }
+
+    public Ward getWard()
+    {
+        return ward;
+    }
+
+    public void setWard(Ward ward)
+    {
+        this.ward = ward;
+    }
+
+    public PollingUnit getPollingUnit()
+    {
+        return pollingUnit;
+    }
+
+    public void setPollingUnit(PollingUnit pollingUnit)
+    {
+        this.pollingUnit = pollingUnit;
+    }
+
+    public String getBank()
+    {
+        return bank;
+    }
+
+    public void setBank(String bank)
+    {
+        this.bank = bank;
+    }
+
+    public String getAccountName()
+    {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName)
+    {
+        this.accountName = accountName;
+    }
+
+    public String getAccountNo()
+    {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo)
+    {
+        this.accountNo = accountNo;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public Timestamp getDateAdded()
+    {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Timestamp dateAdded)
+    {
+        this.dateAdded = dateAdded;
+    }
+
+    public String getAddedBy()
+    {
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy)
+    {
+        this.addedBy = addedBy;
     }
 
     @Override

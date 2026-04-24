@@ -13,11 +13,17 @@ package com.valdbms.members;
 
 import com.valdbms.banks.Bank;
 import com.valdbms.banks.BankDAO;
+import com.valdbms.pollingunits.PollingUnit;
+import com.valdbms.pollingunits.PollingUnitDAO;
 import com.valdbms.roles.Role;
 import com.valdbms.roles.RolesDAO;
+import com.valdbms.states.LGA;
+import com.valdbms.states.State;
+import com.valdbms.states.StatesDAO;
 import com.valdbms.users.User;
 import com.valdbms.util.DateTimeUtil;
 import com.valdbms.util.ExceptionUtil;
+import com.valdbms.wards.LGA_DAO;
 import com.valdbms.wards.Ward;
 import com.valdbms.wards.WardDAO;
 import java.io.IOException;
@@ -60,9 +66,10 @@ public class SubmitNewMemberServlet extends HttpServlet
         String gender = request.getParameter("gender");
         String $dateOfBirth = request.getParameter("dateOfBirth");
         String role = request.getParameter("role");
-        String state = request.getParameter("state");
-        String lga = request.getParameter("lga");
-        String ward = request.getParameter("ward");
+        int stateId = Integer.parseInt(request.getParameter("state"));
+        int lgaId = Integer.parseInt(request.getParameter("lga"));
+        int wardId = Integer.parseInt(request.getParameter("ward"));
+        int pollingUnitId = Integer.parseInt(request.getParameter("pollingUnit"));
         String bank = request.getParameter("bank");
         String accountNo = request.getParameter("accountNo");
         String accountName = request.getParameter("accountName");
@@ -70,16 +77,6 @@ public class SubmitNewMemberServlet extends HttpServlet
         String addedBy = user.getUserName();
         try
         {
-            Ward wardObj = WardDAO.getWard(state, lga, ward);
-            if(wardObj == null)
-            {
-                wardObj = new Ward();
-                wardObj.setWard(ward);
-                wardObj.setLga(lga);
-                wardObj.setState(state);
-                WardDAO.createNewWard(wardObj);
-            }
-
             Bank bankObj = BankDAO.getBank(bank);
             if(bankObj == null)
             {
@@ -103,6 +100,32 @@ public class SubmitNewMemberServlet extends HttpServlet
             else
                 dateOfBirth = Date.valueOf($dateOfBirth);
 
+            State stateObj = StatesDAO.getState(stateId);
+            if(stateObj == null)
+                throw new RuntimeException("Invalid state selected.");
+
+            LGA lgaObj = LGA_DAO.getLga(lgaId);
+            if(lgaObj == null)
+                throw new RuntimeException("Invalid LGA selected.");
+
+            Ward wardObj = WardDAO.getWard(wardId);
+            if(wardObj == null)
+                throw new RuntimeException("Invalid ward selected.");
+
+            PollingUnit pollingUnitObj = PollingUnitDAO.getPollingUnit(pollingUnitId);
+            if(pollingUnitObj == null)
+                throw new RuntimeException("Invalid polling unit selected.");
+
+            /* optional integrity checks, highly recommended */
+            if(lgaObj.getStateId() != stateObj.getId())
+                throw new RuntimeException("LGA does not belong to selected state.");
+
+            if(wardObj.getLga_id() != lgaObj.getId())
+                throw new RuntimeException("Ward does not belong to selected LGA.");
+
+            if(pollingUnitObj.getWardId() != wardObj.getId())
+                throw new RuntimeException("Polling unit does not belong to selected ward.");
+
             Member member = new Member();
             member.setTitle(title);
             member.setMobileNo(mobileNo);
@@ -110,9 +133,10 @@ public class SubmitNewMemberServlet extends HttpServlet
             member.setMiddleName(middleName);
             member.setLastName(lastName);
             member.setRole(role);
-            member.setState(state);
-            member.setLga(lga);
-            member.setWard(ward);
+            member.setState(stateObj);
+            member.setLga(lgaObj);
+            member.setWard(wardObj);
+            member.setPollingUnit(pollingUnitObj);
             member.setBank(bank);
             member.setAccountNo(accountNo);
             member.setAccountName(accountName);

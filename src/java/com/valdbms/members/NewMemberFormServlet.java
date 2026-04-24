@@ -12,6 +12,8 @@
 package com.valdbms.members;
 
 import com.valdbms.banks.BankDAO;
+import com.valdbms.pollingunits.PollingUnit;
+import com.valdbms.pollingunits.PollingUnitDAO;
 import com.valdbms.roles.RolesDAO;
 import com.valdbms.states.LGA;
 import com.valdbms.states.State;
@@ -46,11 +48,21 @@ public class NewMemberFormServlet extends HttpServlet
     {
         try
         {
+            if(request.getParameter("getPollingUnits") != null)
+            {
+                int wardId = Integer.parseInt(request.getParameter("wardId"));
+                List<PollingUnit> pollingUnits = PollingUnitDAO.getPollingUnits(wardId);
+                JSONArray jSONArray = new JSONArray(pollingUnits);
+                try(PrintWriter out = response.getWriter())
+                {
+                    response.setContentType("application/json");
+                    out.print(jSONArray);
+                }
+            }
             if(request.getParameter("getWards") != null)
             {
-                String lga = request.getParameter("lga");
-                String state = request.getParameter("state");
-                List<Ward> wards = WardDAO.getWards(state, lga);
+                int lga = Integer.parseInt(request.getParameter("lga"));
+                List<Ward> wards = WardDAO.getWards(lga);
                 JSONArray jSONArray = new JSONArray(wards);
                 try(PrintWriter out = response.getWriter())
                 {

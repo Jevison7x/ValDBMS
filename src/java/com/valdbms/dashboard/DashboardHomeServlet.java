@@ -13,13 +13,13 @@ package com.valdbms.dashboard;
 
 import com.valdbms.members.Member;
 import com.valdbms.members.MembersDAO;
+import com.valdbms.pollingunits.PollingUnitDAO;
+import com.valdbms.states.StatesDAO;
 import com.valdbms.users.UserDAO;
 import com.valdbms.wards.LGA_DAO;
 import com.valdbms.wards.WardDAO;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,20 +44,21 @@ public class DashboardHomeServlet extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
         try
         {
-            int totalMembers = MembersDAO.getMembersTotalCount();
-            int totalLgas = LGA_DAO.getLgasTotalCount();
-            int totalWards = WardDAO.getWardsTotalCount();
             int totalUsers = UserDAO.getUsersTotalCount();
+            int totalMembers = MembersDAO.getMembersTotalCount();
+            int totalStates = StatesDAO.getStatesTotalCount();
+            int totalLGAs = LGA_DAO.getLgasTotalCount();
+            int totalWards = WardDAO.getWardsTotalCount();
+            int totalPollingUnits = PollingUnitDAO.getPollingUnitsTotalCount();
             List<Member> chairmanList = MembersDAO.getChairmanList();
-            Map<String, Integer> lgaWardsMap = LGA_DAO.getLGAWardsMap();
-            Set<String> lgaSet = lgaWardsMap.keySet();
-            request.setAttribute("totalMembers", totalMembers);
-            request.setAttribute("totalLgas", totalLgas);
-            request.setAttribute("totalWards", totalWards);
             request.setAttribute("totalUsers", totalUsers);
+            request.setAttribute("totalMembers", totalMembers);
+            request.setAttribute("totalStates", totalStates);
+            request.setAttribute("totalLGAs", totalLGAs);
+            request.setAttribute("totalLgas", totalLGAs);
+            request.setAttribute("totalWards", totalWards);
+            request.setAttribute("totalPollingUnits", totalPollingUnits);
             request.setAttribute("chairmanList", chairmanList);
-            request.setAttribute("lgaWardsMap", lgaWardsMap);
-            request.setAttribute("lgaSet", lgaSet);
             request.getRequestDispatcher("home-page").forward(request, response);
         }
         catch(Exception xcp)

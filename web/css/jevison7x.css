@@ -63,3 +63,18 @@
 .sort-btns {
     margin-top: 15px;
 }
+
+#dashboard-home .row.m-t-25 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#dashboard-home .row.m-t-25 > [class*="col-"] {
+    display: flex;
+}
+
+#dashboard-home .row.m-t-25 .overview-item {
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+}

@@ -79,40 +79,41 @@ function hideProgress(){
 
 function initMembersPage(){
     var $membersTable = $('#members-table').DataTable({
-        "serverSide": true,
+        serverSide: true,
         ajax: {
             url: 'members?json=true',
             dataType: 'json',
             type: 'POST'
         },
-        "paging": true,
-        "Filter": true,
-        "processing": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "scrollX": true,
-        "columns": [
-            {"data": "sn"},
-            {"data": "title"},
-            {"data": "firstName"},
-            {"data": "lastName"},
-            {"data": "role"},
-            {"data": "mobileNo"},
-            {"data": "state"},
-            {"data": "lga"},
-            {"data": "ward"},
-            {"data": "bank"},
-            {"data": "accountNo"},
-            {"data": "accountName"},
-            {"data": "email"}
+        paging: true,
+        Filter: true,
+        processing: true,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        scrollX: true,
+        columns: [
+            {data: "sn"},
+            {data: "title"},
+            {data: "firstName"},
+            {data: "lastName"},
+            {data: "role"},
+            {data: "mobileNo"},
+            {data: "state.name"},
+            {data: "lga.name"},
+            {data: "ward.name"},
+            {data: "pollingUnit.name"},
+            {data: "bank"},
+            {data: "accountNo"},
+            {data: "accountName"},
+            {data: "email"}
         ],
-        "columnDefs": [
+        columnDefs: [
             {
                 className: "phone-number",
-                "targets": [5]
+                targets: [5]
             }
         ]
     });
@@ -429,12 +430,10 @@ function initFormActions(){
 
     $('#lga-select').change(function(){
         var lga = $(this).val();
-        $('#lga').val(lga);
-        var state = $('#state').val();
         var $wardSelect = $('#ward-select');
         $.ajax({
             url: 'new-member',
-            data: {getWards: true, state: state, lga: lga},
+            data: {getWards: true, lga: lga},
             dataType: 'JSON',
             beforeSend: function(xhr){
                 $wardSelect.html('');
@@ -450,7 +449,42 @@ function initFormActions(){
                 $wardSelect.html('');
                 $wardSelect.append('<option value="">Please select</option>');
                 for(var i = 0; i < data.length; i++){
-                    $wardSelect.append('<option value="' + data[i].ward + '">' + data[i].ward + '</option>');
+                    $wardSelect.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: 'Please reload this page and try again.'
+                });
+            }
+        });
+    });
+
+    $('#ward-select').change(function(){
+        var wardId = $(this).val();
+        var $pollingUnitSelect = $('#polling-unit-select');
+        $.ajax({
+            url: 'new-member',
+            data: {getPollingUnits: true, wardId: wardId},
+            dataType: 'JSON',
+            beforeSend: function(xhr){
+                $pollingUnitSelect.html('');
+                $pollingUnitSelect.append('<option value="">Loading Wards ...</option>');
+                $pollingUnitSelect.attr('disabled', 'true');
+                $('#polling-unit-addon i').removeClass('fa-navicon').addClass('fa-refresh').addClass('fa-spin');
+            },
+            complete: function(jqXHR, textStatus){
+                $pollingUnitSelect.removeAttr('disabled');
+                $('#polling-unit-addon i').removeClass('fa-refresh').removeClass('fa-spin').addClass('fa-navicon');
+            },
+            success: function(data, textStatus, jqXHR){
+                $pollingUnitSelect.html('');
+                $pollingUnitSelect.append('<option value="">Please select</option>');
+                for(var i = 0; i < data.length; i++){
+                    $pollingUnitSelect.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                 }
             },
             error: function(jqXHR, textStatus, errorThrown){
@@ -493,8 +527,9 @@ function initNewMemberSubmitFormEvent()
         var phoneNumber = $('#phone-number').val().trim();
         var email = $('#email').val().trim();
         var state = $('#state').val().trim();
-        var lga = $('#lga').val().trim();
-        var ward = $('#ward').val().trim();
+        var lga = $('#lga-select').val().trim();
+        var ward = $('#ward-select').val().trim();
+        var pollingUnit = $('#polling-unit-select').val().trim();
         var role = $('#role').val().trim();
         var bank = $('#bank').val().trim();
         var accountNo = $('#account-no').val().trim();
@@ -507,7 +542,7 @@ function initNewMemberSubmitFormEvent()
                 title: title, firstName: firstName, middleName: middleName,
                 lastName: lastName, gender: gender, dateOfBirth: dateOfBirth,
                 phoneNumber: phoneNumber, email: email, state: state,
-                lga: lga, ward: ward, role: role,
+                lga: lga, ward: ward, role: role, pollingUnit: pollingUnit,
                 bank: bank, accountNo: accountNo, accountName: accountName
             },
             method: 'POST',
